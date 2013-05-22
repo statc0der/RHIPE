@@ -304,6 +304,8 @@ int mainMapperLoop(FILE* fin){
 
 
 
+
+
 /*
  * execMapperWithCombiner
  * The WithCombiner is to remind us that we sometimes combine.
@@ -314,6 +316,7 @@ int mainMapperLoop(FILE* fin){
 
 void execMapperWithCombiner(FILE* fin){
 	int ret;
+
 	setupCombiner();
 	if ((ret = mapper_setup()) != 0) {
 		LOGG(12,"FAILURE IN MAP SETUP:%d\n",ret);
@@ -347,8 +350,19 @@ void execReducer(FILE* fin){
 
 }
 
-
-
+/* doHeaderREvaluations();
+* Does all the work that was previously done via environment variables and R commands.
+* Gets out relevant strings from g_RMRHeader and gets them put into the R_GlobalEnv
+* Does not change the engineering of what gets put into R_GlobalEnv so that all code should
+* still work.
+*
+*/
+void doHeaderREvaluations(){
+	for(int i = 0; i < g_RMRHeader.serialized_assignments_size(); i++){
+		ParameterPair p = g_RMRHeader.serialized_assignments(i);
+		assignUnserialize(p.name().c_str(), p.value().c_str());
+	}
+}
 
 
 extern "C" {
@@ -424,6 +438,7 @@ SEXP execMapReduce() {
 
 
 	LOGG(9,"Loaded R Wrappers\n");
+	doHeaderREvaluations(); // get all the expressions in the global environment via the header.
 
 	LOGG(10,"STD{IN,OUT,ERR}  in binary \n");
 

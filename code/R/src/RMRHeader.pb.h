@@ -227,7 +227,7 @@ class RMRHeader : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required string ID = 1;
+  // optional string ID = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIDFieldNumber = 1;
@@ -238,7 +238,7 @@ class RMRHeader : public ::google::protobuf::Message {
   inline ::std::string* mutable_id();
   inline ::std::string* release_id();
   
-  // required .RhipeMode RHIPEWHAT = 2;
+  // optional .RhipeMode RHIPEWHAT = 2;
   inline bool has_rhipewhat() const;
   inline void clear_rhipewhat();
   static const int kRHIPEWHATFieldNumber = 2;
@@ -255,94 +255,6 @@ class RMRHeader : public ::google::protobuf::Message {
   inline void set_rhipelogfile(const char* value, size_t size);
   inline ::std::string* mutable_rhipelogfile();
   inline ::std::string* release_rhipelogfile();
-  
-  // optional string rhipe_setup_map = 4;
-  inline bool has_rhipe_setup_map() const;
-  inline void clear_rhipe_setup_map();
-  static const int kRhipeSetupMapFieldNumber = 4;
-  inline const ::std::string& rhipe_setup_map() const;
-  inline void set_rhipe_setup_map(const ::std::string& value);
-  inline void set_rhipe_setup_map(const char* value);
-  inline void set_rhipe_setup_map(const char* value, size_t size);
-  inline ::std::string* mutable_rhipe_setup_map();
-  inline ::std::string* release_rhipe_setup_map();
-  
-  // optional string rhipe_map = 5;
-  inline bool has_rhipe_map() const;
-  inline void clear_rhipe_map();
-  static const int kRhipeMapFieldNumber = 5;
-  inline const ::std::string& rhipe_map() const;
-  inline void set_rhipe_map(const ::std::string& value);
-  inline void set_rhipe_map(const char* value);
-  inline void set_rhipe_map(const char* value, size_t size);
-  inline ::std::string* mutable_rhipe_map();
-  inline ::std::string* release_rhipe_map();
-  
-  // optional string rhipe_cleanup_map = 6;
-  inline bool has_rhipe_cleanup_map() const;
-  inline void clear_rhipe_cleanup_map();
-  static const int kRhipeCleanupMapFieldNumber = 6;
-  inline const ::std::string& rhipe_cleanup_map() const;
-  inline void set_rhipe_cleanup_map(const ::std::string& value);
-  inline void set_rhipe_cleanup_map(const char* value);
-  inline void set_rhipe_cleanup_map(const char* value, size_t size);
-  inline ::std::string* mutable_rhipe_cleanup_map();
-  inline ::std::string* release_rhipe_cleanup_map();
-  
-  // optional string rhipe_reduce_setup = 7;
-  inline bool has_rhipe_reduce_setup() const;
-  inline void clear_rhipe_reduce_setup();
-  static const int kRhipeReduceSetupFieldNumber = 7;
-  inline const ::std::string& rhipe_reduce_setup() const;
-  inline void set_rhipe_reduce_setup(const ::std::string& value);
-  inline void set_rhipe_reduce_setup(const char* value);
-  inline void set_rhipe_reduce_setup(const char* value, size_t size);
-  inline ::std::string* mutable_rhipe_reduce_setup();
-  inline ::std::string* release_rhipe_reduce_setup();
-  
-  // optional string rhipe_reduce_prekey = 8;
-  inline bool has_rhipe_reduce_prekey() const;
-  inline void clear_rhipe_reduce_prekey();
-  static const int kRhipeReducePrekeyFieldNumber = 8;
-  inline const ::std::string& rhipe_reduce_prekey() const;
-  inline void set_rhipe_reduce_prekey(const ::std::string& value);
-  inline void set_rhipe_reduce_prekey(const char* value);
-  inline void set_rhipe_reduce_prekey(const char* value, size_t size);
-  inline ::std::string* mutable_rhipe_reduce_prekey();
-  inline ::std::string* release_rhipe_reduce_prekey();
-  
-  // optional string rhipe_reduce = 9;
-  inline bool has_rhipe_reduce() const;
-  inline void clear_rhipe_reduce();
-  static const int kRhipeReduceFieldNumber = 9;
-  inline const ::std::string& rhipe_reduce() const;
-  inline void set_rhipe_reduce(const ::std::string& value);
-  inline void set_rhipe_reduce(const char* value);
-  inline void set_rhipe_reduce(const char* value, size_t size);
-  inline ::std::string* mutable_rhipe_reduce();
-  inline ::std::string* release_rhipe_reduce();
-  
-  // optional string rhipe_reduce_postkey = 10;
-  inline bool has_rhipe_reduce_postkey() const;
-  inline void clear_rhipe_reduce_postkey();
-  static const int kRhipeReducePostkeyFieldNumber = 10;
-  inline const ::std::string& rhipe_reduce_postkey() const;
-  inline void set_rhipe_reduce_postkey(const ::std::string& value);
-  inline void set_rhipe_reduce_postkey(const char* value);
-  inline void set_rhipe_reduce_postkey(const char* value, size_t size);
-  inline ::std::string* mutable_rhipe_reduce_postkey();
-  inline ::std::string* release_rhipe_reduce_postkey();
-  
-  // optional string rhipe_reduce_cleanup = 11;
-  inline bool has_rhipe_reduce_cleanup() const;
-  inline void clear_rhipe_reduce_cleanup();
-  static const int kRhipeReduceCleanupFieldNumber = 11;
-  inline const ::std::string& rhipe_reduce_cleanup() const;
-  inline void set_rhipe_reduce_cleanup(const ::std::string& value);
-  inline void set_rhipe_reduce_cleanup(const char* value);
-  inline void set_rhipe_reduce_cleanup(const char* value, size_t size);
-  inline ::std::string* mutable_rhipe_reduce_cleanup();
-  inline ::std::string* release_rhipe_reduce_cleanup();
   
   // optional string rhipe_outputformat_class = 12;
   inline bool has_rhipe_outputformat_class() const;
@@ -376,10 +288,22 @@ class RMRHeader : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 rhipe_map_bytes_read() const;
   inline void set_rhipe_map_bytes_read(::google::protobuf::int32 value);
   
-  // repeated .ParameterPair arguments = 16;
+  // repeated .ParameterPair serialized_assignments = 16;
+  inline int serialized_assignments_size() const;
+  inline void clear_serialized_assignments();
+  static const int kSerializedAssignmentsFieldNumber = 16;
+  inline const ::ParameterPair& serialized_assignments(int index) const;
+  inline ::ParameterPair* mutable_serialized_assignments(int index);
+  inline ::ParameterPair* add_serialized_assignments();
+  inline const ::google::protobuf::RepeatedPtrField< ::ParameterPair >&
+      serialized_assignments() const;
+  inline ::google::protobuf::RepeatedPtrField< ::ParameterPair >*
+      mutable_serialized_assignments();
+  
+  // repeated .ParameterPair arguments = 17;
   inline int arguments_size() const;
   inline void clear_arguments();
-  static const int kArgumentsFieldNumber = 16;
+  static const int kArgumentsFieldNumber = 17;
   inline const ::ParameterPair& arguments(int index) const;
   inline ::ParameterPair* mutable_arguments(int index);
   inline ::ParameterPair* add_arguments();
@@ -396,22 +320,6 @@ class RMRHeader : public ::google::protobuf::Message {
   inline void clear_has_rhipewhat();
   inline void set_has_rhipelogfile();
   inline void clear_has_rhipelogfile();
-  inline void set_has_rhipe_setup_map();
-  inline void clear_has_rhipe_setup_map();
-  inline void set_has_rhipe_map();
-  inline void clear_has_rhipe_map();
-  inline void set_has_rhipe_cleanup_map();
-  inline void clear_has_rhipe_cleanup_map();
-  inline void set_has_rhipe_reduce_setup();
-  inline void clear_has_rhipe_reduce_setup();
-  inline void set_has_rhipe_reduce_prekey();
-  inline void clear_has_rhipe_reduce_prekey();
-  inline void set_has_rhipe_reduce();
-  inline void clear_has_rhipe_reduce();
-  inline void set_has_rhipe_reduce_postkey();
-  inline void clear_has_rhipe_reduce_postkey();
-  inline void set_has_rhipe_reduce_cleanup();
-  inline void clear_has_rhipe_reduce_cleanup();
   inline void set_has_rhipe_outputformat_class();
   inline void clear_has_rhipe_outputformat_class();
   inline void set_has_rhipe_combiner();
@@ -425,23 +333,16 @@ class RMRHeader : public ::google::protobuf::Message {
   
   ::std::string* id_;
   ::std::string* rhipelogfile_;
-  ::std::string* rhipe_setup_map_;
-  ::std::string* rhipe_map_;
-  ::std::string* rhipe_cleanup_map_;
-  ::std::string* rhipe_reduce_setup_;
   int rhipewhat_;
   int rhipe_combiner_;
-  ::std::string* rhipe_reduce_prekey_;
-  ::std::string* rhipe_reduce_;
-  ::std::string* rhipe_reduce_postkey_;
-  ::std::string* rhipe_reduce_cleanup_;
   ::std::string* rhipe_outputformat_class_;
   ::google::protobuf::int32 rhipe_map_buff_size_;
   ::google::protobuf::int32 rhipe_map_bytes_read_;
+  ::google::protobuf::RepeatedPtrField< ::ParameterPair > serialized_assignments_;
   ::google::protobuf::RepeatedPtrField< ::ParameterPair > arguments_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(16 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
   
   friend void  protobuf_AddDesc_RMRHeader_2eproto();
   friend void protobuf_AssignDesc_RMRHeader_2eproto();
@@ -577,7 +478,7 @@ inline ::std::string* ParameterPair::release_value() {
 
 // RMRHeader
 
-// required string ID = 1;
+// optional string ID = 1;
 inline bool RMRHeader::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -635,7 +536,7 @@ inline ::std::string* RMRHeader::release_id() {
   }
 }
 
-// required .RhipeMode RHIPEWHAT = 2;
+// optional .RhipeMode RHIPEWHAT = 2;
 inline bool RMRHeader::has_rhipewhat() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -716,479 +617,15 @@ inline ::std::string* RMRHeader::release_rhipelogfile() {
   }
 }
 
-// optional string rhipe_setup_map = 4;
-inline bool RMRHeader::has_rhipe_setup_map() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void RMRHeader::set_has_rhipe_setup_map() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void RMRHeader::clear_has_rhipe_setup_map() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void RMRHeader::clear_rhipe_setup_map() {
-  if (rhipe_setup_map_ != &::google::protobuf::internal::kEmptyString) {
-    rhipe_setup_map_->clear();
-  }
-  clear_has_rhipe_setup_map();
-}
-inline const ::std::string& RMRHeader::rhipe_setup_map() const {
-  return *rhipe_setup_map_;
-}
-inline void RMRHeader::set_rhipe_setup_map(const ::std::string& value) {
-  set_has_rhipe_setup_map();
-  if (rhipe_setup_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_setup_map_ = new ::std::string;
-  }
-  rhipe_setup_map_->assign(value);
-}
-inline void RMRHeader::set_rhipe_setup_map(const char* value) {
-  set_has_rhipe_setup_map();
-  if (rhipe_setup_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_setup_map_ = new ::std::string;
-  }
-  rhipe_setup_map_->assign(value);
-}
-inline void RMRHeader::set_rhipe_setup_map(const char* value, size_t size) {
-  set_has_rhipe_setup_map();
-  if (rhipe_setup_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_setup_map_ = new ::std::string;
-  }
-  rhipe_setup_map_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RMRHeader::mutable_rhipe_setup_map() {
-  set_has_rhipe_setup_map();
-  if (rhipe_setup_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_setup_map_ = new ::std::string;
-  }
-  return rhipe_setup_map_;
-}
-inline ::std::string* RMRHeader::release_rhipe_setup_map() {
-  clear_has_rhipe_setup_map();
-  if (rhipe_setup_map_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = rhipe_setup_map_;
-    rhipe_setup_map_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-
-// optional string rhipe_map = 5;
-inline bool RMRHeader::has_rhipe_map() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void RMRHeader::set_has_rhipe_map() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void RMRHeader::clear_has_rhipe_map() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void RMRHeader::clear_rhipe_map() {
-  if (rhipe_map_ != &::google::protobuf::internal::kEmptyString) {
-    rhipe_map_->clear();
-  }
-  clear_has_rhipe_map();
-}
-inline const ::std::string& RMRHeader::rhipe_map() const {
-  return *rhipe_map_;
-}
-inline void RMRHeader::set_rhipe_map(const ::std::string& value) {
-  set_has_rhipe_map();
-  if (rhipe_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_map_ = new ::std::string;
-  }
-  rhipe_map_->assign(value);
-}
-inline void RMRHeader::set_rhipe_map(const char* value) {
-  set_has_rhipe_map();
-  if (rhipe_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_map_ = new ::std::string;
-  }
-  rhipe_map_->assign(value);
-}
-inline void RMRHeader::set_rhipe_map(const char* value, size_t size) {
-  set_has_rhipe_map();
-  if (rhipe_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_map_ = new ::std::string;
-  }
-  rhipe_map_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RMRHeader::mutable_rhipe_map() {
-  set_has_rhipe_map();
-  if (rhipe_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_map_ = new ::std::string;
-  }
-  return rhipe_map_;
-}
-inline ::std::string* RMRHeader::release_rhipe_map() {
-  clear_has_rhipe_map();
-  if (rhipe_map_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = rhipe_map_;
-    rhipe_map_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-
-// optional string rhipe_cleanup_map = 6;
-inline bool RMRHeader::has_rhipe_cleanup_map() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void RMRHeader::set_has_rhipe_cleanup_map() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void RMRHeader::clear_has_rhipe_cleanup_map() {
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline void RMRHeader::clear_rhipe_cleanup_map() {
-  if (rhipe_cleanup_map_ != &::google::protobuf::internal::kEmptyString) {
-    rhipe_cleanup_map_->clear();
-  }
-  clear_has_rhipe_cleanup_map();
-}
-inline const ::std::string& RMRHeader::rhipe_cleanup_map() const {
-  return *rhipe_cleanup_map_;
-}
-inline void RMRHeader::set_rhipe_cleanup_map(const ::std::string& value) {
-  set_has_rhipe_cleanup_map();
-  if (rhipe_cleanup_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_cleanup_map_ = new ::std::string;
-  }
-  rhipe_cleanup_map_->assign(value);
-}
-inline void RMRHeader::set_rhipe_cleanup_map(const char* value) {
-  set_has_rhipe_cleanup_map();
-  if (rhipe_cleanup_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_cleanup_map_ = new ::std::string;
-  }
-  rhipe_cleanup_map_->assign(value);
-}
-inline void RMRHeader::set_rhipe_cleanup_map(const char* value, size_t size) {
-  set_has_rhipe_cleanup_map();
-  if (rhipe_cleanup_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_cleanup_map_ = new ::std::string;
-  }
-  rhipe_cleanup_map_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RMRHeader::mutable_rhipe_cleanup_map() {
-  set_has_rhipe_cleanup_map();
-  if (rhipe_cleanup_map_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_cleanup_map_ = new ::std::string;
-  }
-  return rhipe_cleanup_map_;
-}
-inline ::std::string* RMRHeader::release_rhipe_cleanup_map() {
-  clear_has_rhipe_cleanup_map();
-  if (rhipe_cleanup_map_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = rhipe_cleanup_map_;
-    rhipe_cleanup_map_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-
-// optional string rhipe_reduce_setup = 7;
-inline bool RMRHeader::has_rhipe_reduce_setup() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void RMRHeader::set_has_rhipe_reduce_setup() {
-  _has_bits_[0] |= 0x00000040u;
-}
-inline void RMRHeader::clear_has_rhipe_reduce_setup() {
-  _has_bits_[0] &= ~0x00000040u;
-}
-inline void RMRHeader::clear_rhipe_reduce_setup() {
-  if (rhipe_reduce_setup_ != &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_setup_->clear();
-  }
-  clear_has_rhipe_reduce_setup();
-}
-inline const ::std::string& RMRHeader::rhipe_reduce_setup() const {
-  return *rhipe_reduce_setup_;
-}
-inline void RMRHeader::set_rhipe_reduce_setup(const ::std::string& value) {
-  set_has_rhipe_reduce_setup();
-  if (rhipe_reduce_setup_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_setup_ = new ::std::string;
-  }
-  rhipe_reduce_setup_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce_setup(const char* value) {
-  set_has_rhipe_reduce_setup();
-  if (rhipe_reduce_setup_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_setup_ = new ::std::string;
-  }
-  rhipe_reduce_setup_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce_setup(const char* value, size_t size) {
-  set_has_rhipe_reduce_setup();
-  if (rhipe_reduce_setup_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_setup_ = new ::std::string;
-  }
-  rhipe_reduce_setup_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RMRHeader::mutable_rhipe_reduce_setup() {
-  set_has_rhipe_reduce_setup();
-  if (rhipe_reduce_setup_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_setup_ = new ::std::string;
-  }
-  return rhipe_reduce_setup_;
-}
-inline ::std::string* RMRHeader::release_rhipe_reduce_setup() {
-  clear_has_rhipe_reduce_setup();
-  if (rhipe_reduce_setup_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = rhipe_reduce_setup_;
-    rhipe_reduce_setup_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-
-// optional string rhipe_reduce_prekey = 8;
-inline bool RMRHeader::has_rhipe_reduce_prekey() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
-}
-inline void RMRHeader::set_has_rhipe_reduce_prekey() {
-  _has_bits_[0] |= 0x00000080u;
-}
-inline void RMRHeader::clear_has_rhipe_reduce_prekey() {
-  _has_bits_[0] &= ~0x00000080u;
-}
-inline void RMRHeader::clear_rhipe_reduce_prekey() {
-  if (rhipe_reduce_prekey_ != &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_prekey_->clear();
-  }
-  clear_has_rhipe_reduce_prekey();
-}
-inline const ::std::string& RMRHeader::rhipe_reduce_prekey() const {
-  return *rhipe_reduce_prekey_;
-}
-inline void RMRHeader::set_rhipe_reduce_prekey(const ::std::string& value) {
-  set_has_rhipe_reduce_prekey();
-  if (rhipe_reduce_prekey_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_prekey_ = new ::std::string;
-  }
-  rhipe_reduce_prekey_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce_prekey(const char* value) {
-  set_has_rhipe_reduce_prekey();
-  if (rhipe_reduce_prekey_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_prekey_ = new ::std::string;
-  }
-  rhipe_reduce_prekey_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce_prekey(const char* value, size_t size) {
-  set_has_rhipe_reduce_prekey();
-  if (rhipe_reduce_prekey_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_prekey_ = new ::std::string;
-  }
-  rhipe_reduce_prekey_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RMRHeader::mutable_rhipe_reduce_prekey() {
-  set_has_rhipe_reduce_prekey();
-  if (rhipe_reduce_prekey_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_prekey_ = new ::std::string;
-  }
-  return rhipe_reduce_prekey_;
-}
-inline ::std::string* RMRHeader::release_rhipe_reduce_prekey() {
-  clear_has_rhipe_reduce_prekey();
-  if (rhipe_reduce_prekey_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = rhipe_reduce_prekey_;
-    rhipe_reduce_prekey_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-
-// optional string rhipe_reduce = 9;
-inline bool RMRHeader::has_rhipe_reduce() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
-}
-inline void RMRHeader::set_has_rhipe_reduce() {
-  _has_bits_[0] |= 0x00000100u;
-}
-inline void RMRHeader::clear_has_rhipe_reduce() {
-  _has_bits_[0] &= ~0x00000100u;
-}
-inline void RMRHeader::clear_rhipe_reduce() {
-  if (rhipe_reduce_ != &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_->clear();
-  }
-  clear_has_rhipe_reduce();
-}
-inline const ::std::string& RMRHeader::rhipe_reduce() const {
-  return *rhipe_reduce_;
-}
-inline void RMRHeader::set_rhipe_reduce(const ::std::string& value) {
-  set_has_rhipe_reduce();
-  if (rhipe_reduce_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_ = new ::std::string;
-  }
-  rhipe_reduce_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce(const char* value) {
-  set_has_rhipe_reduce();
-  if (rhipe_reduce_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_ = new ::std::string;
-  }
-  rhipe_reduce_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce(const char* value, size_t size) {
-  set_has_rhipe_reduce();
-  if (rhipe_reduce_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_ = new ::std::string;
-  }
-  rhipe_reduce_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RMRHeader::mutable_rhipe_reduce() {
-  set_has_rhipe_reduce();
-  if (rhipe_reduce_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_ = new ::std::string;
-  }
-  return rhipe_reduce_;
-}
-inline ::std::string* RMRHeader::release_rhipe_reduce() {
-  clear_has_rhipe_reduce();
-  if (rhipe_reduce_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = rhipe_reduce_;
-    rhipe_reduce_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-
-// optional string rhipe_reduce_postkey = 10;
-inline bool RMRHeader::has_rhipe_reduce_postkey() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
-}
-inline void RMRHeader::set_has_rhipe_reduce_postkey() {
-  _has_bits_[0] |= 0x00000200u;
-}
-inline void RMRHeader::clear_has_rhipe_reduce_postkey() {
-  _has_bits_[0] &= ~0x00000200u;
-}
-inline void RMRHeader::clear_rhipe_reduce_postkey() {
-  if (rhipe_reduce_postkey_ != &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_postkey_->clear();
-  }
-  clear_has_rhipe_reduce_postkey();
-}
-inline const ::std::string& RMRHeader::rhipe_reduce_postkey() const {
-  return *rhipe_reduce_postkey_;
-}
-inline void RMRHeader::set_rhipe_reduce_postkey(const ::std::string& value) {
-  set_has_rhipe_reduce_postkey();
-  if (rhipe_reduce_postkey_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_postkey_ = new ::std::string;
-  }
-  rhipe_reduce_postkey_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce_postkey(const char* value) {
-  set_has_rhipe_reduce_postkey();
-  if (rhipe_reduce_postkey_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_postkey_ = new ::std::string;
-  }
-  rhipe_reduce_postkey_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce_postkey(const char* value, size_t size) {
-  set_has_rhipe_reduce_postkey();
-  if (rhipe_reduce_postkey_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_postkey_ = new ::std::string;
-  }
-  rhipe_reduce_postkey_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RMRHeader::mutable_rhipe_reduce_postkey() {
-  set_has_rhipe_reduce_postkey();
-  if (rhipe_reduce_postkey_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_postkey_ = new ::std::string;
-  }
-  return rhipe_reduce_postkey_;
-}
-inline ::std::string* RMRHeader::release_rhipe_reduce_postkey() {
-  clear_has_rhipe_reduce_postkey();
-  if (rhipe_reduce_postkey_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = rhipe_reduce_postkey_;
-    rhipe_reduce_postkey_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-
-// optional string rhipe_reduce_cleanup = 11;
-inline bool RMRHeader::has_rhipe_reduce_cleanup() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
-}
-inline void RMRHeader::set_has_rhipe_reduce_cleanup() {
-  _has_bits_[0] |= 0x00000400u;
-}
-inline void RMRHeader::clear_has_rhipe_reduce_cleanup() {
-  _has_bits_[0] &= ~0x00000400u;
-}
-inline void RMRHeader::clear_rhipe_reduce_cleanup() {
-  if (rhipe_reduce_cleanup_ != &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_cleanup_->clear();
-  }
-  clear_has_rhipe_reduce_cleanup();
-}
-inline const ::std::string& RMRHeader::rhipe_reduce_cleanup() const {
-  return *rhipe_reduce_cleanup_;
-}
-inline void RMRHeader::set_rhipe_reduce_cleanup(const ::std::string& value) {
-  set_has_rhipe_reduce_cleanup();
-  if (rhipe_reduce_cleanup_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_cleanup_ = new ::std::string;
-  }
-  rhipe_reduce_cleanup_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce_cleanup(const char* value) {
-  set_has_rhipe_reduce_cleanup();
-  if (rhipe_reduce_cleanup_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_cleanup_ = new ::std::string;
-  }
-  rhipe_reduce_cleanup_->assign(value);
-}
-inline void RMRHeader::set_rhipe_reduce_cleanup(const char* value, size_t size) {
-  set_has_rhipe_reduce_cleanup();
-  if (rhipe_reduce_cleanup_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_cleanup_ = new ::std::string;
-  }
-  rhipe_reduce_cleanup_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RMRHeader::mutable_rhipe_reduce_cleanup() {
-  set_has_rhipe_reduce_cleanup();
-  if (rhipe_reduce_cleanup_ == &::google::protobuf::internal::kEmptyString) {
-    rhipe_reduce_cleanup_ = new ::std::string;
-  }
-  return rhipe_reduce_cleanup_;
-}
-inline ::std::string* RMRHeader::release_rhipe_reduce_cleanup() {
-  clear_has_rhipe_reduce_cleanup();
-  if (rhipe_reduce_cleanup_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = rhipe_reduce_cleanup_;
-    rhipe_reduce_cleanup_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-
 // optional string rhipe_outputformat_class = 12;
 inline bool RMRHeader::has_rhipe_outputformat_class() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void RMRHeader::set_has_rhipe_outputformat_class() {
-  _has_bits_[0] |= 0x00000800u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void RMRHeader::clear_has_rhipe_outputformat_class() {
-  _has_bits_[0] &= ~0x00000800u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void RMRHeader::clear_rhipe_outputformat_class() {
   if (rhipe_outputformat_class_ != &::google::protobuf::internal::kEmptyString) {
@@ -1240,13 +677,13 @@ inline ::std::string* RMRHeader::release_rhipe_outputformat_class() {
 
 // optional .CombinerMode rhipe_combiner = 13;
 inline bool RMRHeader::has_rhipe_combiner() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void RMRHeader::set_has_rhipe_combiner() {
-  _has_bits_[0] |= 0x00001000u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void RMRHeader::clear_has_rhipe_combiner() {
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void RMRHeader::clear_rhipe_combiner() {
   rhipe_combiner_ = 0;
@@ -1263,13 +700,13 @@ inline void RMRHeader::set_rhipe_combiner(CombinerMode value) {
 
 // optional int32 rhipe_map_buff_size = 14;
 inline bool RMRHeader::has_rhipe_map_buff_size() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void RMRHeader::set_has_rhipe_map_buff_size() {
-  _has_bits_[0] |= 0x00002000u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void RMRHeader::clear_has_rhipe_map_buff_size() {
-  _has_bits_[0] &= ~0x00002000u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void RMRHeader::clear_rhipe_map_buff_size() {
   rhipe_map_buff_size_ = 0;
@@ -1285,13 +722,13 @@ inline void RMRHeader::set_rhipe_map_buff_size(::google::protobuf::int32 value) 
 
 // optional int32 rhipe_map_bytes_read = 15;
 inline bool RMRHeader::has_rhipe_map_bytes_read() const {
-  return (_has_bits_[0] & 0x00004000u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void RMRHeader::set_has_rhipe_map_bytes_read() {
-  _has_bits_[0] |= 0x00004000u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void RMRHeader::clear_has_rhipe_map_bytes_read() {
-  _has_bits_[0] &= ~0x00004000u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void RMRHeader::clear_rhipe_map_bytes_read() {
   rhipe_map_bytes_read_ = 0;
@@ -1305,7 +742,32 @@ inline void RMRHeader::set_rhipe_map_bytes_read(::google::protobuf::int32 value)
   rhipe_map_bytes_read_ = value;
 }
 
-// repeated .ParameterPair arguments = 16;
+// repeated .ParameterPair serialized_assignments = 16;
+inline int RMRHeader::serialized_assignments_size() const {
+  return serialized_assignments_.size();
+}
+inline void RMRHeader::clear_serialized_assignments() {
+  serialized_assignments_.Clear();
+}
+inline const ::ParameterPair& RMRHeader::serialized_assignments(int index) const {
+  return serialized_assignments_.Get(index);
+}
+inline ::ParameterPair* RMRHeader::mutable_serialized_assignments(int index) {
+  return serialized_assignments_.Mutable(index);
+}
+inline ::ParameterPair* RMRHeader::add_serialized_assignments() {
+  return serialized_assignments_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::ParameterPair >&
+RMRHeader::serialized_assignments() const {
+  return serialized_assignments_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::ParameterPair >*
+RMRHeader::mutable_serialized_assignments() {
+  return &serialized_assignments_;
+}
+
+// repeated .ParameterPair arguments = 17;
 inline int RMRHeader::arguments_size() const {
   return arguments_.size();
 }

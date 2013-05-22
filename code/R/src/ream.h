@@ -2,6 +2,7 @@
 #define	__ream_h
 
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <map>
 
@@ -55,7 +56,7 @@ extern const char* MAPSETUPS;
 extern const char* MAPRUNNERS;
 extern const char* MAPCLEANS;
 extern bool combiner_inplace;
-
+extern RMRHeader g_RMRHeader;
 
 
 
@@ -126,6 +127,7 @@ extern int _STATE_;
 /*
  * MESSAGES.cc
  */
+void assignUnserialize(const char*, const char*);
 SEXP rexpress(const char*);
 void sexpToRexp(REXP *, const SEXP);
 void fill_rexp(REXP *, const SEXP );
@@ -208,6 +210,11 @@ const int mapper_run(void);
 const int mapper_setup(void);
 const int reducer_run(void);
 const int reducer_setup(void);
+
+/*********************
+** HELPER
+**********************/
+void assignString(const char* identifier, const char* assignment, SEXP environment);
 
 /*****************
  ** Displays

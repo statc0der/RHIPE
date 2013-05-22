@@ -4,6 +4,24 @@
 
 using namespace std;
 
+//Assigns a STRING to identifier in environment.
+//Useful for getting things out of RMRHeader into R.
+//Author: Jeremiah Rounds
+void assignString(const char* identifier, const char* assignment, SEXP environment){
+	SEXP s = R_NilValue;
+    PROTECT(s = Rf_allocVector(STRSXP,1));
+	SET_STRING_ELT(s, 0, Rf_mkChar(assignment));
+	Rf_setVar(Rf_install(identifier),s,environment);
+	UNPROTECT(1);
+}
+//Assigns Unserialization to an identifier in R_GlobalEnv.
+//Useful for getting serialized expressions into the global environment.
+void assignUnserialize(const char* identifier, const char* serialized){
+	assignString(identifier, serialized, R_GlobalEnv);
+	ostringstream os;
+	os << identifier << "<- unserialize(charToRaw(" << identifier << "))";
+	rexpress(os.str().c_str());
+}
 
 SEXP rexpress(const char* cmd)
 {
