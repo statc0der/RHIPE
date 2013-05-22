@@ -127,7 +127,7 @@ extern int _STATE_;
 /*
  * MESSAGES.cc
  */
-void assignUnserialize(const char*, const char*);
+SEXP assignUnserialize(const char*, const char*);
 SEXP rexpress(const char*);
 void sexpToRexp(REXP *, const SEXP);
 void fill_rexp(REXP *, const SEXP );

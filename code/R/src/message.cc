@@ -16,11 +16,12 @@ void assignString(const char* identifier, const char* assignment, SEXP environme
 }
 //Assigns Unserialization to an identifier in R_GlobalEnv.
 //Useful for getting serialized expressions into the global environment.
-void assignUnserialize(const char* identifier, const char* serialized){
+SEXP assignUnserialize(const char* identifier, const char* serialized){
 	assignString(identifier, serialized, R_GlobalEnv);
 	ostringstream os;
 	os << identifier << "<- unserialize(charToRaw(" << identifier << "))";
-	rexpress(os.str().c_str());
+	return(rexpress(os.str().c_str()));
+
 }
 
 SEXP rexpress(const char* cmd)

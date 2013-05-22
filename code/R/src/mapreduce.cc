@@ -150,7 +150,7 @@ void setupCombiner(){
 	rexpress(".rhipe.current.state<-'map.combine';rhcollect<-function(key,value) .Call('rh_collect_buffer',key,value)");
 	SEXP reducesetup;
 	int Rerr = 0;
-	PROTECT(reducesetup=rexpress(REDUCESETUP));
+	PROTECT(reducesetup=rexpress("rhipe_setup_reduce"));
 	R_tryEval(Rf_lang2(Rf_install("eval"), reducesetup), NULL, &Rerr);
 	UNPROTECT(1);
 }
@@ -183,7 +183,7 @@ void cleanupMapper(){
 
 	//do we really need to evaluate type to see if we should be doing this?  Don't see why...
 	Rf_defineVar(Rf_install(".rhipe.current.state"),Rf_ScalarString(Rf_mkChar("map.cleanup")),R_GlobalEnv);
-	PROTECT(cleaner=rexpress(MAPCLEANS));
+	PROTECT(cleaner=rexpress("rhipe_cleanup_map"));
 	R_tryEval(Rf_lang2(Rf_install("eval"),cleaner),NULL,&Rerr);
 	UNPROTECT(1);
 
@@ -214,9 +214,10 @@ int mainMapperLoop(FILE* fin){
 	  int32_t  max_bytes_to_read = 0;
 
 	  //CREATE MAP EXPRESSION LANGUAGE OBJECTS
-	  PROTECT(runner1=rexpress(MAPRUNNERS));
+	  PROTECT(runner1=rexpress("rhipe_map"));
 	  PROTECT(runner2=Rf_lang2(Rf_install("eval"),runner1));
 	  protect += 2;
+	  //
 
 	  if(runner2==NILSXP){
 	    merror("RHIPE ERROR: Could not create mapper\n");
