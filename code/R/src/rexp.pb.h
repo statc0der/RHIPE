@@ -42,11 +42,14 @@ enum REXP_RClass {
   REXP_RClass_INTEGER = 4,
   REXP_RClass_LIST = 5,
   REXP_RClass_LOGICAL = 6,
-  REXP_RClass_NULLTYPE = 7
+  REXP_RClass_NULLTYPE = 7,
+  REXP_RClass_REAL1 = 8,
+  REXP_RClass_INTEGER1 = 10,
+  REXP_RClass_STRING1 = 9
 };
 bool REXP_RClass_IsValid(int value);
 const REXP_RClass REXP_RClass_RClass_MIN = REXP_RClass_STRING;
-const REXP_RClass REXP_RClass_RClass_MAX = REXP_RClass_NULLTYPE;
+const REXP_RClass REXP_RClass_RClass_MAX = REXP_RClass_INTEGER1;
 const int REXP_RClass_RClass_ARRAYSIZE = REXP_RClass_RClass_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* REXP_RClass_descriptor();
@@ -142,6 +145,9 @@ class REXP : public ::google::protobuf::Message {
   static const RClass LIST = REXP_RClass_LIST;
   static const RClass LOGICAL = REXP_RClass_LOGICAL;
   static const RClass NULLTYPE = REXP_RClass_NULLTYPE;
+  static const RClass REAL1 = REXP_RClass_REAL1;
+  static const RClass INTEGER1 = REXP_RClass_INTEGER1;
+  static const RClass STRING1 = REXP_RClass_STRING1;
   static inline bool RClass_IsValid(int value) {
     return REXP_RClass_IsValid(value);
   }
@@ -306,12 +312,40 @@ class REXP : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::REXP >*
       mutable_attrvalue();
   
+  // optional double singleRealValue = 13;
+  inline bool has_singlerealvalue() const;
+  inline void clear_singlerealvalue();
+  static const int kSingleRealValueFieldNumber = 13;
+  inline double singlerealvalue() const;
+  inline void set_singlerealvalue(double value);
+  
+  // optional .STRING singleStringValue = 15;
+  inline bool has_singlestringvalue() const;
+  inline void clear_singlestringvalue();
+  static const int kSingleStringValueFieldNumber = 15;
+  inline const ::STRING& singlestringvalue() const;
+  inline ::STRING* mutable_singlestringvalue();
+  inline ::STRING* release_singlestringvalue();
+  
+  // optional sint32 singleIntegerValue = 16;
+  inline bool has_singleintegervalue() const;
+  inline void clear_singleintegervalue();
+  static const int kSingleIntegerValueFieldNumber = 16;
+  inline ::google::protobuf::int32 singleintegervalue() const;
+  inline void set_singleintegervalue(::google::protobuf::int32 value);
+  
   // @@protoc_insertion_point(class_scope:REXP)
  private:
   inline void set_has_rclass();
   inline void clear_has_rclass();
   inline void set_has_rawvalue();
   inline void clear_has_rawvalue();
+  inline void set_has_singlerealvalue();
+  inline void clear_has_singlerealvalue();
+  inline void set_has_singlestringvalue();
+  inline void clear_has_singlestringvalue();
+  inline void set_has_singleintegervalue();
+  inline void clear_has_singleintegervalue();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
@@ -323,13 +357,16 @@ class REXP : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedPtrField< ::STRING > stringvalue_;
   ::std::string* rawvalue_;
   ::google::protobuf::RepeatedPtrField< ::CMPLX > complexvalue_;
+  int rclass_;
+  ::google::protobuf::int32 singleintegervalue_;
   ::google::protobuf::RepeatedPtrField< ::REXP > rexpvalue_;
   ::google::protobuf::RepeatedPtrField< ::std::string> attrname_;
   ::google::protobuf::RepeatedPtrField< ::REXP > attrvalue_;
-  int rclass_;
+  double singlerealvalue_;
+  ::STRING* singlestringvalue_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
   
   friend void  protobuf_AddDesc_rexp_2eproto();
   friend void protobuf_AssignDesc_rexp_2eproto();
@@ -833,6 +870,79 @@ REXP::attrvalue() const {
 inline ::google::protobuf::RepeatedPtrField< ::REXP >*
 REXP::mutable_attrvalue() {
   return &attrvalue_;
+}
+
+// optional double singleRealValue = 13;
+inline bool REXP::has_singlerealvalue() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void REXP::set_has_singlerealvalue() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void REXP::clear_has_singlerealvalue() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void REXP::clear_singlerealvalue() {
+  singlerealvalue_ = 0;
+  clear_has_singlerealvalue();
+}
+inline double REXP::singlerealvalue() const {
+  return singlerealvalue_;
+}
+inline void REXP::set_singlerealvalue(double value) {
+  set_has_singlerealvalue();
+  singlerealvalue_ = value;
+}
+
+// optional .STRING singleStringValue = 15;
+inline bool REXP::has_singlestringvalue() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void REXP::set_has_singlestringvalue() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void REXP::clear_has_singlestringvalue() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void REXP::clear_singlestringvalue() {
+  if (singlestringvalue_ != NULL) singlestringvalue_->::STRING::Clear();
+  clear_has_singlestringvalue();
+}
+inline const ::STRING& REXP::singlestringvalue() const {
+  return singlestringvalue_ != NULL ? *singlestringvalue_ : *default_instance_->singlestringvalue_;
+}
+inline ::STRING* REXP::mutable_singlestringvalue() {
+  set_has_singlestringvalue();
+  if (singlestringvalue_ == NULL) singlestringvalue_ = new ::STRING;
+  return singlestringvalue_;
+}
+inline ::STRING* REXP::release_singlestringvalue() {
+  clear_has_singlestringvalue();
+  ::STRING* temp = singlestringvalue_;
+  singlestringvalue_ = NULL;
+  return temp;
+}
+
+// optional sint32 singleIntegerValue = 16;
+inline bool REXP::has_singleintegervalue() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void REXP::set_has_singleintegervalue() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void REXP::clear_has_singleintegervalue() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void REXP::clear_singleintegervalue() {
+  singleintegervalue_ = 0;
+  clear_has_singleintegervalue();
+}
+inline ::google::protobuf::int32 REXP::singleintegervalue() const {
+  return singleintegervalue_;
+}
+inline void REXP::set_singleintegervalue(::google::protobuf::int32 value) {
+  set_has_singleintegervalue();
+  singleintegervalue_ = value;
 }
 
 // -------------------------------------------------------------------

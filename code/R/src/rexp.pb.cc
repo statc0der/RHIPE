@@ -37,7 +37,7 @@ void protobuf_AssignDesc_rexp_2eproto() {
       "rexp.proto");
   GOOGLE_CHECK(file != NULL);
   REXP_descriptor_ = file->message_type(0);
-  static const int REXP_offsets_[10] = {
+  static const int REXP_offsets_[13] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(REXP, rclass_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(REXP, realvalue_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(REXP, intvalue_),
@@ -48,6 +48,9 @@ void protobuf_AssignDesc_rexp_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(REXP, rexpvalue_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(REXP, attrname_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(REXP, attrvalue_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(REXP, singlerealvalue_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(REXP, singlestringvalue_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(REXP, singleintegervalue_),
   };
   REXP_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -132,20 +135,23 @@ void protobuf_AddDesc_rexp_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\nrexp.proto\"\225\003\n\004REXP\022\034\n\006rclass\030\001 \002(\0162\014."
+    "\n\nrexp.proto\"\225\004\n\004REXP\022\034\n\006rclass\030\001 \002(\0162\014."
     "REXP.RClass\022\025\n\trealValue\030\002 \003(\001B\002\020\001\022\024\n\010in"
     "tValue\030\003 \003(\021B\002\020\001\022$\n\014booleanValue\030\004 \003(\0162\016"
     ".REXP.RBOOLEAN\022\034\n\013stringValue\030\005 \003(\0132\007.ST"
     "RING\022\020\n\010rawValue\030\006 \001(\014\022\034\n\014complexValue\030\007"
     " \003(\0132\006.CMPLX\022\030\n\trexpValue\030\010 \003(\0132\005.REXP\022\020"
     "\n\010attrName\030\013 \003(\t\022\030\n\tattrValue\030\014 \003(\0132\005.RE"
-    "XP\"f\n\006RClass\022\n\n\006STRING\020\000\022\007\n\003RAW\020\001\022\010\n\004REA"
-    "L\020\002\022\013\n\007COMPLEX\020\003\022\013\n\007INTEGER\020\004\022\010\n\004LIST\020\005\022"
-    "\013\n\007LOGICAL\020\006\022\014\n\010NULLTYPE\020\007\" \n\010RBOOLEAN\022\005"
-    "\n\001F\020\000\022\005\n\001T\020\001\022\006\n\002NA\020\002\"-\n\006STRING\022\016\n\006strval"
-    "\030\001 \001(\t\022\023\n\004isNA\030\002 \001(\010:\005false\"&\n\005CMPLX\022\017\n\004"
-    "real\030\001 \001(\001:\0010\022\014\n\004imag\030\002 \002(\001B\037\n\021org.godhu"
-    "li.rhipeB\nREXPProtos", 540);
+    "XP\022\027\n\017singleRealValue\030\r \001(\001\022\"\n\021singleStr"
+    "ingValue\030\017 \001(\0132\007.STRING\022\032\n\022singleInteger"
+    "Value\030\020 \001(\021\"\214\001\n\006RClass\022\n\n\006STRING\020\000\022\007\n\003RA"
+    "W\020\001\022\010\n\004REAL\020\002\022\013\n\007COMPLEX\020\003\022\013\n\007INTEGER\020\004\022"
+    "\010\n\004LIST\020\005\022\013\n\007LOGICAL\020\006\022\014\n\010NULLTYPE\020\007\022\t\n\005"
+    "REAL1\020\010\022\014\n\010INTEGER1\020\n\022\013\n\007STRING1\020\t\" \n\010RB"
+    "OOLEAN\022\005\n\001F\020\000\022\005\n\001T\020\001\022\006\n\002NA\020\002\"-\n\006STRING\022\016"
+    "\n\006strval\030\001 \001(\t\022\023\n\004isNA\030\002 \001(\010:\005false\"&\n\005C"
+    "MPLX\022\017\n\004real\030\001 \001(\001:\0010\022\014\n\004imag\030\002 \002(\001B\037\n\021o"
+    "rg.godhuli.rhipeB\nREXPProtos", 668);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "rexp.proto", &protobuf_RegisterTypes);
   REXP::default_instance_ = new REXP();
@@ -181,6 +187,9 @@ bool REXP_RClass_IsValid(int value) {
     case 5:
     case 6:
     case 7:
+    case 8:
+    case 9:
+    case 10:
       return true;
     default:
       return false;
@@ -196,6 +205,9 @@ const REXP_RClass REXP::INTEGER;
 const REXP_RClass REXP::LIST;
 const REXP_RClass REXP::LOGICAL;
 const REXP_RClass REXP::NULLTYPE;
+const REXP_RClass REXP::REAL1;
+const REXP_RClass REXP::INTEGER1;
+const REXP_RClass REXP::STRING1;
 const REXP_RClass REXP::RClass_MIN;
 const REXP_RClass REXP::RClass_MAX;
 const int REXP::RClass_ARRAYSIZE;
@@ -234,6 +246,9 @@ const int REXP::kComplexValueFieldNumber;
 const int REXP::kRexpValueFieldNumber;
 const int REXP::kAttrNameFieldNumber;
 const int REXP::kAttrValueFieldNumber;
+const int REXP::kSingleRealValueFieldNumber;
+const int REXP::kSingleStringValueFieldNumber;
+const int REXP::kSingleIntegerValueFieldNumber;
 #endif  // !_MSC_VER
 
 REXP::REXP()
@@ -242,6 +257,7 @@ REXP::REXP()
 }
 
 void REXP::InitAsDefaultInstance() {
+  singlestringvalue_ = const_cast< ::STRING*>(&::STRING::default_instance());
 }
 
 REXP::REXP(const REXP& from)
@@ -254,6 +270,9 @@ void REXP::SharedCtor() {
   _cached_size_ = 0;
   rclass_ = 0;
   rawvalue_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  singlerealvalue_ = 0;
+  singlestringvalue_ = NULL;
+  singleintegervalue_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -266,6 +285,7 @@ void REXP::SharedDtor() {
     delete rawvalue_;
   }
   if (this != default_instance_) {
+    delete singlestringvalue_;
   }
 }
 
@@ -297,6 +317,13 @@ void REXP::Clear() {
         rawvalue_->clear();
       }
     }
+  }
+  if (_has_bits_[10 / 32] & (0xffu << (10 % 32))) {
+    singlerealvalue_ = 0;
+    if (has_singlestringvalue()) {
+      if (singlestringvalue_ != NULL) singlestringvalue_->::STRING::Clear();
+    }
+    singleintegervalue_ = 0;
   }
   realvalue_.Clear();
   intvalue_.Clear();
@@ -495,6 +522,52 @@ bool REXP::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(98)) goto parse_attrValue;
+        if (input->ExpectTag(105)) goto parse_singleRealValue;
+        break;
+      }
+      
+      // optional double singleRealValue = 13;
+      case 13: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+         parse_singleRealValue:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &singlerealvalue_)));
+          set_has_singlerealvalue();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(122)) goto parse_singleStringValue;
+        break;
+      }
+      
+      // optional .STRING singleStringValue = 15;
+      case 15: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_singleStringValue:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_singlestringvalue()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(128)) goto parse_singleIntegerValue;
+        break;
+      }
+      
+      // optional sint32 singleIntegerValue = 16;
+      case 16: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_singleIntegerValue:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_SINT32>(
+                 input, &singleintegervalue_)));
+          set_has_singleintegervalue();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -586,6 +659,22 @@ void REXP::SerializeWithCachedSizes(
   for (int i = 0; i < this->attrvalue_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       12, this->attrvalue(i), output);
+  }
+  
+  // optional double singleRealValue = 13;
+  if (has_singlerealvalue()) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(13, this->singlerealvalue(), output);
+  }
+  
+  // optional .STRING singleStringValue = 15;
+  if (has_singlestringvalue()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      15, this->singlestringvalue(), output);
+  }
+  
+  // optional sint32 singleIntegerValue = 16;
+  if (has_singleintegervalue()) {
+    ::google::protobuf::internal::WireFormatLite::WriteSInt32(16, this->singleintegervalue(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -680,6 +769,23 @@ void REXP::SerializeWithCachedSizes(
         12, this->attrvalue(i), target);
   }
   
+  // optional double singleRealValue = 13;
+  if (has_singlerealvalue()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(13, this->singlerealvalue(), target);
+  }
+  
+  // optional .STRING singleStringValue = 15;
+  if (has_singlestringvalue()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        15, this->singlestringvalue(), target);
+  }
+  
+  // optional sint32 singleIntegerValue = 16;
+  if (has_singleintegervalue()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteSInt32ToArray(16, this->singleintegervalue(), target);
+  }
+  
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -702,6 +808,27 @@ int REXP::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->rawvalue());
+    }
+    
+  }
+  if (_has_bits_[10 / 32] & (0xffu << (10 % 32))) {
+    // optional double singleRealValue = 13;
+    if (has_singlerealvalue()) {
+      total_size += 1 + 8;
+    }
+    
+    // optional .STRING singleStringValue = 15;
+    if (has_singlestringvalue()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->singlestringvalue());
+    }
+    
+    // optional sint32 singleIntegerValue = 16;
+    if (has_singleintegervalue()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::SInt32Size(
+          this->singleintegervalue());
     }
     
   }
@@ -822,6 +949,17 @@ void REXP::MergeFrom(const REXP& from) {
       set_rawvalue(from.rawvalue());
     }
   }
+  if (from._has_bits_[10 / 32] & (0xffu << (10 % 32))) {
+    if (from.has_singlerealvalue()) {
+      set_singlerealvalue(from.singlerealvalue());
+    }
+    if (from.has_singlestringvalue()) {
+      mutable_singlestringvalue()->::STRING::MergeFrom(from.singlestringvalue());
+    }
+    if (from.has_singleintegervalue()) {
+      set_singleintegervalue(from.singleintegervalue());
+    }
+  }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
@@ -864,6 +1002,9 @@ void REXP::Swap(REXP* other) {
     rexpvalue_.Swap(&other->rexpvalue_);
     attrname_.Swap(&other->attrname_);
     attrvalue_.Swap(&other->attrvalue_);
+    std::swap(singlerealvalue_, other->singlerealvalue_);
+    std::swap(singlestringvalue_, other->singlestringvalue_);
+    std::swap(singleintegervalue_, other->singleintegervalue_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
