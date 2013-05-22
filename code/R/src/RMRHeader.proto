@@ -1,5 +1,6 @@
 option java_package = "org.godhuli.rhipe";
 option java_outer_classname = "RMRHeaderProtos";
+
   
 
 message ParameterPair {
@@ -21,25 +22,17 @@ enum CombinerMode {
 //use grep getenv *  it catches both R and C environment snooping.
 //RMR stands for RhipeMapReduce
 message RMRHeader {
-	required string ID = 1; //Happy message from Java to C if you should so desire.
-	required RhipeMode RHIPEWHAT = 2; //currently unread
+	optional string ID = 1; //Happy message from Java to C if you should so desire.
+	optional RhipeMode RHIPEWHAT = 2; //currently unread
 	optional string RHIPELOGFILE = 3;//currently unread
-	optional string rhipe_setup_map = 4; //serialized expression
-	optional string rhipe_map = 5; //serialized expression
-	optional string rhipe_cleanup_map = 6; // serialized expression
-	optional string rhipe_reduce_setup = 7; // serialized expression
-	optional string rhipe_reduce_prekey = 8; // serialized expression
-	optional string rhipe_reduce = 9; //serialized expression
-	optional string rhipe_reduce_postkey = 10; //serialized expression
-	optional string rhipe_reduce_cleanup = 11; //serialized expression
-	
 	//In source for conversion but not currently read
 	optional string rhipe_outputformat_class = 12; //currently unread
 	optional CombinerMode rhipe_combiner = 13; //currently unread use 1 to indicate combiner.
 	optional int32 rhipe_map_buff_size = 14; //currently unread
 	optional int32 rhipe_map_bytes_read = 15; //currently unread
 	
+	repeated ParameterPair serialized_assignments = 16; //everything in here gets value unserialized and assigned to name
 	//future use: someone can stuff what ever they want into arguments
-	repeated ParameterPair arguments = 16; //May not use... but is here if many expressions needed to be moved across for a mode.
-}
+	repeated ParameterPair arguments = 17; //Not used
+	}
  
