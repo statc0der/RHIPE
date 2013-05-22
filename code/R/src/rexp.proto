@@ -31,9 +31,9 @@ message REXP {
   repeated REXP	    rexpValue		= 8;
   repeated string   attrName		= 11;
   repeated REXP     attrValue		= 12;
-  double   singleRealValue		= 13;
-  STRING   singleStringValue		= 15;
-  sint32   singleIntegerValue		= 16;
+  optional double   singleRealValue		= 13;
+  optional STRING   singleStringValue	= 15;
+  optional sint32   singleIntegerValue	= 16;
 
 }
 
