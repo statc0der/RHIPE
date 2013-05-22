@@ -233,13 +233,13 @@ void spill_to_reducer(void){
 	SEXP comb_pre_red,comb_do_red,comb_post_red;
 	rexpress(".rhipe.current.state<-'map.combine';rhcollect<-function(key,value) .Call('rh_collect',key,value)");
 	SEXP dummy1,dummy2,dummy3;
-	PROTECT(dummy1=rexpress(REDUCEPREKEY));
+	PROTECT(dummy1=rexpress("rhipe_reduce_prekey"));
 	PROTECT(comb_pre_red=Rf_lang2(Rf_install("eval"),dummy1));
 
-	PROTECT(dummy2=rexpress(REDUCE));
+	PROTECT(dummy2=rexpress("rhipe_reduce"));
 	PROTECT(comb_do_red=Rf_lang2(Rf_install("eval"),dummy2));
 	
-	PROTECT(dummy3=rexpress(REDUCEPOSTKEY));
+	PROTECT(dummy3=rexpress("rhipe_reduce_postkey"));
 	PROTECT(comb_post_red=Rf_lang2(Rf_install("eval"),dummy3));
 
 	map<string, vector<string> >::iterator it;
