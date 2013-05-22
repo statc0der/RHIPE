@@ -8,7 +8,7 @@ using namespace std;
 extern int R_running_as_main_program;
 extern uintptr_t R_CStackLimit; 
 
-
+RMRHeader g_RMRHeader;
 
 
 
@@ -131,8 +131,14 @@ void quitR(){
 
 }
 
-extern "C" int main(int argc,char **argv){
-	//everything is hard coded to get streams from CMMNC so it has to be set up first.
+int main(int argc,char **argv){
+	//First thing we expect in STDIN is a RMRHeader.
+	//Parsing it is straight away and then utilizing it as necessary in Mapper or Reduce logic.
+	GOOGLE_PROTOBUF_VERIFY_VERSION;  
+	g_RMRHeader.ParseFromIstream(&cin);
+	
+	//After that everything is coded to get streams from CMMNC 
+	//so it has to be set up first.
 	//Specifically rewritten Re_WriteConsole in display.cc
 	CMMNC = (Streams*) malloc(sizeof(Streams));
 	setup_stream(CMMNC);
