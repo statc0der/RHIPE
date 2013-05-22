@@ -107,7 +107,7 @@ public class RHMRHelper {
 				ParameterPair.Builder p = ParameterPair.newBuilder();
 				p.setName(name);
 				p.setValue(conf.get(name));
-				header.addSerializedAssignments(p);
+				header.addSerializedAssignments(p.build());
 			}else{
 				//send to environment
 				String value = null;
