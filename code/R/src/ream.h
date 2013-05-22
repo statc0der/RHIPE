@@ -7,6 +7,7 @@
 
 #include <google/protobuf/stubs/common.h>
 #include <rexp.pb.h>
+#include <RMRHeader.pb.h>
 
 #include <stdint.h>
 #include <sys/types.h>	
