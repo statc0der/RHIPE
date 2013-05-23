@@ -50,22 +50,15 @@ void protobuf_AssignDesc_RMRHeader_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ParameterPair));
   RMRHeader_descriptor_ = file->message_type(1);
-  static const int RMRHeader_offsets_[16] = {
+  static const int RMRHeader_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipewhat_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipelogfile_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_setup_map_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_map_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_cleanup_map_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_reduce_setup_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_reduce_prekey_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_reduce_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_reduce_postkey_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_reduce_cleanup_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_outputformat_class_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_combiner_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_map_buff_size_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, rhipe_map_bytes_read_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, serialized_assignments_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RMRHeader, arguments_),
   };
   RMRHeader_reflection_ =
@@ -116,22 +109,18 @@ void protobuf_AddDesc_RMRHeader_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\017RMRHeader.proto\",\n\rParameterPair\022\014\n\004na"
-    "me\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"\305\003\n\tRMRHeader\022\n\n"
-    "\002ID\030\001 \002(\t\022\035\n\tRHIPEWHAT\030\002 \002(\0162\n.RhipeMode"
-    "\022\024\n\014RHIPELOGFILE\030\003 \001(\t\022\027\n\017rhipe_setup_ma"
-    "p\030\004 \001(\t\022\021\n\trhipe_map\030\005 \001(\t\022\031\n\021rhipe_clea"
-    "nup_map\030\006 \001(\t\022\032\n\022rhipe_reduce_setup\030\007 \001("
-    "\t\022\033\n\023rhipe_reduce_prekey\030\010 \001(\t\022\024\n\014rhipe_"
-    "reduce\030\t \001(\t\022\034\n\024rhipe_reduce_postkey\030\n \001"
-    "(\t\022\034\n\024rhipe_reduce_cleanup\030\013 \001(\t\022 \n\030rhip"
-    "e_outputformat_class\030\014 \001(\t\022%\n\016rhipe_comb"
-    "iner\030\r \001(\0162\r.CombinerMode\022\033\n\023rhipe_map_b"
-    "uff_size\030\016 \001(\005\022\034\n\024rhipe_map_bytes_read\030\017"
-    " \001(\005\022!\n\targuments\030\020 \003(\0132\016.ParameterPair*"
-    "$\n\tRhipeMode\022\n\n\006MAPPER\020\001\022\013\n\007REDUCER\020\002*1\n"
-    "\014CombinerMode\022\017\n\013NO_COMBINER\020\000\022\020\n\014USE_CO"
-    "MBINER\020\001B$\n\021org.godhuli.rhipeB\017RMRHeader"
-    "Protos", 646);
+    "me\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"\243\002\n\tRMRHeader\022\n\n"
+    "\002ID\030\001 \001(\t\022\035\n\tRHIPEWHAT\030\002 \001(\0162\n.RhipeMode"
+    "\022\024\n\014RHIPELOGFILE\030\003 \001(\t\022 \n\030rhipe_outputfo"
+    "rmat_class\030\014 \001(\t\022%\n\016rhipe_combiner\030\r \001(\016"
+    "2\r.CombinerMode\022\033\n\023rhipe_map_buff_size\030\016"
+    " \001(\005\022\034\n\024rhipe_map_bytes_read\030\017 \001(\005\022.\n\026se"
+    "rialized_assignments\030\020 \003(\0132\016.ParameterPa"
+    "ir\022!\n\targuments\030\021 \003(\0132\016.ParameterPair*$\n"
+    "\tRhipeMode\022\n\n\006MAPPER\020\001\022\013\n\007REDUCER\020\002*1\n\014C"
+    "ombinerMode\022\017\n\013NO_COMBINER\020\000\022\020\n\014USE_COMB"
+    "INER\020\001B$\n\021org.godhuli.rhipeB\017RMRHeaderPr"
+    "otos", 484);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RMRHeader.proto", &protobuf_RegisterTypes);
   ParameterPair::default_instance_ = new ParameterPair();
@@ -465,18 +454,11 @@ void ParameterPair::Swap(ParameterPair* other) {
 const int RMRHeader::kIDFieldNumber;
 const int RMRHeader::kRHIPEWHATFieldNumber;
 const int RMRHeader::kRHIPELOGFILEFieldNumber;
-const int RMRHeader::kRhipeSetupMapFieldNumber;
-const int RMRHeader::kRhipeMapFieldNumber;
-const int RMRHeader::kRhipeCleanupMapFieldNumber;
-const int RMRHeader::kRhipeReduceSetupFieldNumber;
-const int RMRHeader::kRhipeReducePrekeyFieldNumber;
-const int RMRHeader::kRhipeReduceFieldNumber;
-const int RMRHeader::kRhipeReducePostkeyFieldNumber;
-const int RMRHeader::kRhipeReduceCleanupFieldNumber;
 const int RMRHeader::kRhipeOutputformatClassFieldNumber;
 const int RMRHeader::kRhipeCombinerFieldNumber;
 const int RMRHeader::kRhipeMapBuffSizeFieldNumber;
 const int RMRHeader::kRhipeMapBytesReadFieldNumber;
+const int RMRHeader::kSerializedAssignmentsFieldNumber;
 const int RMRHeader::kArgumentsFieldNumber;
 #endif  // !_MSC_VER
 
@@ -499,14 +481,6 @@ void RMRHeader::SharedCtor() {
   id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   rhipewhat_ = 1;
   rhipelogfile_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  rhipe_setup_map_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  rhipe_map_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  rhipe_cleanup_map_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  rhipe_reduce_setup_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  rhipe_reduce_prekey_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  rhipe_reduce_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  rhipe_reduce_postkey_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  rhipe_reduce_cleanup_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   rhipe_outputformat_class_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   rhipe_combiner_ = 0;
   rhipe_map_buff_size_ = 0;
@@ -524,30 +498,6 @@ void RMRHeader::SharedDtor() {
   }
   if (rhipelogfile_ != &::google::protobuf::internal::kEmptyString) {
     delete rhipelogfile_;
-  }
-  if (rhipe_setup_map_ != &::google::protobuf::internal::kEmptyString) {
-    delete rhipe_setup_map_;
-  }
-  if (rhipe_map_ != &::google::protobuf::internal::kEmptyString) {
-    delete rhipe_map_;
-  }
-  if (rhipe_cleanup_map_ != &::google::protobuf::internal::kEmptyString) {
-    delete rhipe_cleanup_map_;
-  }
-  if (rhipe_reduce_setup_ != &::google::protobuf::internal::kEmptyString) {
-    delete rhipe_reduce_setup_;
-  }
-  if (rhipe_reduce_prekey_ != &::google::protobuf::internal::kEmptyString) {
-    delete rhipe_reduce_prekey_;
-  }
-  if (rhipe_reduce_ != &::google::protobuf::internal::kEmptyString) {
-    delete rhipe_reduce_;
-  }
-  if (rhipe_reduce_postkey_ != &::google::protobuf::internal::kEmptyString) {
-    delete rhipe_reduce_postkey_;
-  }
-  if (rhipe_reduce_cleanup_ != &::google::protobuf::internal::kEmptyString) {
-    delete rhipe_reduce_cleanup_;
   }
   if (rhipe_outputformat_class_ != &::google::protobuf::internal::kEmptyString) {
     delete rhipe_outputformat_class_;
@@ -589,48 +539,6 @@ void RMRHeader::Clear() {
         rhipelogfile_->clear();
       }
     }
-    if (has_rhipe_setup_map()) {
-      if (rhipe_setup_map_ != &::google::protobuf::internal::kEmptyString) {
-        rhipe_setup_map_->clear();
-      }
-    }
-    if (has_rhipe_map()) {
-      if (rhipe_map_ != &::google::protobuf::internal::kEmptyString) {
-        rhipe_map_->clear();
-      }
-    }
-    if (has_rhipe_cleanup_map()) {
-      if (rhipe_cleanup_map_ != &::google::protobuf::internal::kEmptyString) {
-        rhipe_cleanup_map_->clear();
-      }
-    }
-    if (has_rhipe_reduce_setup()) {
-      if (rhipe_reduce_setup_ != &::google::protobuf::internal::kEmptyString) {
-        rhipe_reduce_setup_->clear();
-      }
-    }
-    if (has_rhipe_reduce_prekey()) {
-      if (rhipe_reduce_prekey_ != &::google::protobuf::internal::kEmptyString) {
-        rhipe_reduce_prekey_->clear();
-      }
-    }
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (has_rhipe_reduce()) {
-      if (rhipe_reduce_ != &::google::protobuf::internal::kEmptyString) {
-        rhipe_reduce_->clear();
-      }
-    }
-    if (has_rhipe_reduce_postkey()) {
-      if (rhipe_reduce_postkey_ != &::google::protobuf::internal::kEmptyString) {
-        rhipe_reduce_postkey_->clear();
-      }
-    }
-    if (has_rhipe_reduce_cleanup()) {
-      if (rhipe_reduce_cleanup_ != &::google::protobuf::internal::kEmptyString) {
-        rhipe_reduce_cleanup_->clear();
-      }
-    }
     if (has_rhipe_outputformat_class()) {
       if (rhipe_outputformat_class_ != &::google::protobuf::internal::kEmptyString) {
         rhipe_outputformat_class_->clear();
@@ -640,6 +548,7 @@ void RMRHeader::Clear() {
     rhipe_map_buff_size_ = 0;
     rhipe_map_bytes_read_ = 0;
   }
+  serialized_assignments_.Clear();
   arguments_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -651,7 +560,7 @@ bool RMRHeader::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string ID = 1;
+      // optional string ID = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -667,7 +576,7 @@ bool RMRHeader::MergePartialFromCodedStream(
         break;
       }
       
-      // required .RhipeMode RHIPEWHAT = 2;
+      // optional .RhipeMode RHIPEWHAT = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -697,142 +606,6 @@ bool RMRHeader::MergePartialFromCodedStream(
                 input, this->mutable_rhipelogfile()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->rhipelogfile().data(), this->rhipelogfile().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(34)) goto parse_rhipe_setup_map;
-        break;
-      }
-      
-      // optional string rhipe_setup_map = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_rhipe_setup_map:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_rhipe_setup_map()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->rhipe_setup_map().data(), this->rhipe_setup_map().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(42)) goto parse_rhipe_map;
-        break;
-      }
-      
-      // optional string rhipe_map = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_rhipe_map:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_rhipe_map()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->rhipe_map().data(), this->rhipe_map().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(50)) goto parse_rhipe_cleanup_map;
-        break;
-      }
-      
-      // optional string rhipe_cleanup_map = 6;
-      case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_rhipe_cleanup_map:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_rhipe_cleanup_map()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->rhipe_cleanup_map().data(), this->rhipe_cleanup_map().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(58)) goto parse_rhipe_reduce_setup;
-        break;
-      }
-      
-      // optional string rhipe_reduce_setup = 7;
-      case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_rhipe_reduce_setup:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_rhipe_reduce_setup()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->rhipe_reduce_setup().data(), this->rhipe_reduce_setup().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(66)) goto parse_rhipe_reduce_prekey;
-        break;
-      }
-      
-      // optional string rhipe_reduce_prekey = 8;
-      case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_rhipe_reduce_prekey:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_rhipe_reduce_prekey()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->rhipe_reduce_prekey().data(), this->rhipe_reduce_prekey().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(74)) goto parse_rhipe_reduce;
-        break;
-      }
-      
-      // optional string rhipe_reduce = 9;
-      case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_rhipe_reduce:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_rhipe_reduce()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->rhipe_reduce().data(), this->rhipe_reduce().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(82)) goto parse_rhipe_reduce_postkey;
-        break;
-      }
-      
-      // optional string rhipe_reduce_postkey = 10;
-      case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_rhipe_reduce_postkey:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_rhipe_reduce_postkey()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->rhipe_reduce_postkey().data(), this->rhipe_reduce_postkey().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(90)) goto parse_rhipe_reduce_cleanup;
-        break;
-      }
-      
-      // optional string rhipe_reduce_cleanup = 11;
-      case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_rhipe_reduce_cleanup:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_rhipe_reduce_cleanup()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->rhipe_reduce_cleanup().data(), this->rhipe_reduce_cleanup().length(),
             ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
@@ -907,12 +680,27 @@ bool RMRHeader::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(130)) goto parse_arguments;
+        if (input->ExpectTag(130)) goto parse_serialized_assignments;
         break;
       }
       
-      // repeated .ParameterPair arguments = 16;
+      // repeated .ParameterPair serialized_assignments = 16;
       case 16: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_serialized_assignments:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_serialized_assignments()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(130)) goto parse_serialized_assignments;
+        if (input->ExpectTag(138)) goto parse_arguments;
+        break;
+      }
+      
+      // repeated .ParameterPair arguments = 17;
+      case 17: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_arguments:
@@ -921,7 +709,7 @@ bool RMRHeader::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(130)) goto parse_arguments;
+        if (input->ExpectTag(138)) goto parse_arguments;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -944,7 +732,7 @@ bool RMRHeader::MergePartialFromCodedStream(
 
 void RMRHeader::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string ID = 1;
+  // optional string ID = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->id().data(), this->id().length(),
@@ -953,7 +741,7 @@ void RMRHeader::SerializeWithCachedSizes(
       1, this->id(), output);
   }
   
-  // required .RhipeMode RHIPEWHAT = 2;
+  // optional .RhipeMode RHIPEWHAT = 2;
   if (has_rhipewhat()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->rhipewhat(), output);
@@ -966,78 +754,6 @@ void RMRHeader::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->rhipelogfile(), output);
-  }
-  
-  // optional string rhipe_setup_map = 4;
-  if (has_rhipe_setup_map()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_setup_map().data(), this->rhipe_setup_map().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->rhipe_setup_map(), output);
-  }
-  
-  // optional string rhipe_map = 5;
-  if (has_rhipe_map()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_map().data(), this->rhipe_map().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      5, this->rhipe_map(), output);
-  }
-  
-  // optional string rhipe_cleanup_map = 6;
-  if (has_rhipe_cleanup_map()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_cleanup_map().data(), this->rhipe_cleanup_map().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      6, this->rhipe_cleanup_map(), output);
-  }
-  
-  // optional string rhipe_reduce_setup = 7;
-  if (has_rhipe_reduce_setup()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce_setup().data(), this->rhipe_reduce_setup().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      7, this->rhipe_reduce_setup(), output);
-  }
-  
-  // optional string rhipe_reduce_prekey = 8;
-  if (has_rhipe_reduce_prekey()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce_prekey().data(), this->rhipe_reduce_prekey().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      8, this->rhipe_reduce_prekey(), output);
-  }
-  
-  // optional string rhipe_reduce = 9;
-  if (has_rhipe_reduce()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce().data(), this->rhipe_reduce().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      9, this->rhipe_reduce(), output);
-  }
-  
-  // optional string rhipe_reduce_postkey = 10;
-  if (has_rhipe_reduce_postkey()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce_postkey().data(), this->rhipe_reduce_postkey().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      10, this->rhipe_reduce_postkey(), output);
-  }
-  
-  // optional string rhipe_reduce_cleanup = 11;
-  if (has_rhipe_reduce_cleanup()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce_cleanup().data(), this->rhipe_reduce_cleanup().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      11, this->rhipe_reduce_cleanup(), output);
   }
   
   // optional string rhipe_outputformat_class = 12;
@@ -1065,10 +781,16 @@ void RMRHeader::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(15, this->rhipe_map_bytes_read(), output);
   }
   
-  // repeated .ParameterPair arguments = 16;
+  // repeated .ParameterPair serialized_assignments = 16;
+  for (int i = 0; i < this->serialized_assignments_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      16, this->serialized_assignments(i), output);
+  }
+  
+  // repeated .ParameterPair arguments = 17;
   for (int i = 0; i < this->arguments_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      16, this->arguments(i), output);
+      17, this->arguments(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1079,7 +801,7 @@ void RMRHeader::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* RMRHeader::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string ID = 1;
+  // optional string ID = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->id().data(), this->id().length(),
@@ -1089,7 +811,7 @@ void RMRHeader::SerializeWithCachedSizes(
         1, this->id(), target);
   }
   
-  // required .RhipeMode RHIPEWHAT = 2;
+  // optional .RhipeMode RHIPEWHAT = 2;
   if (has_rhipewhat()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->rhipewhat(), target);
@@ -1103,86 +825,6 @@ void RMRHeader::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->rhipelogfile(), target);
-  }
-  
-  // optional string rhipe_setup_map = 4;
-  if (has_rhipe_setup_map()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_setup_map().data(), this->rhipe_setup_map().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->rhipe_setup_map(), target);
-  }
-  
-  // optional string rhipe_map = 5;
-  if (has_rhipe_map()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_map().data(), this->rhipe_map().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->rhipe_map(), target);
-  }
-  
-  // optional string rhipe_cleanup_map = 6;
-  if (has_rhipe_cleanup_map()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_cleanup_map().data(), this->rhipe_cleanup_map().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->rhipe_cleanup_map(), target);
-  }
-  
-  // optional string rhipe_reduce_setup = 7;
-  if (has_rhipe_reduce_setup()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce_setup().data(), this->rhipe_reduce_setup().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        7, this->rhipe_reduce_setup(), target);
-  }
-  
-  // optional string rhipe_reduce_prekey = 8;
-  if (has_rhipe_reduce_prekey()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce_prekey().data(), this->rhipe_reduce_prekey().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        8, this->rhipe_reduce_prekey(), target);
-  }
-  
-  // optional string rhipe_reduce = 9;
-  if (has_rhipe_reduce()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce().data(), this->rhipe_reduce().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        9, this->rhipe_reduce(), target);
-  }
-  
-  // optional string rhipe_reduce_postkey = 10;
-  if (has_rhipe_reduce_postkey()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce_postkey().data(), this->rhipe_reduce_postkey().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        10, this->rhipe_reduce_postkey(), target);
-  }
-  
-  // optional string rhipe_reduce_cleanup = 11;
-  if (has_rhipe_reduce_cleanup()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->rhipe_reduce_cleanup().data(), this->rhipe_reduce_cleanup().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        11, this->rhipe_reduce_cleanup(), target);
   }
   
   // optional string rhipe_outputformat_class = 12;
@@ -1211,11 +853,18 @@ void RMRHeader::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(15, this->rhipe_map_bytes_read(), target);
   }
   
-  // repeated .ParameterPair arguments = 16;
+  // repeated .ParameterPair serialized_assignments = 16;
+  for (int i = 0; i < this->serialized_assignments_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        16, this->serialized_assignments(i), target);
+  }
+  
+  // repeated .ParameterPair arguments = 17;
   for (int i = 0; i < this->arguments_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        16, this->arguments(i), target);
+        17, this->arguments(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1229,14 +878,14 @@ int RMRHeader::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string ID = 1;
+    // optional string ID = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->id());
     }
     
-    // required .RhipeMode RHIPEWHAT = 2;
+    // optional .RhipeMode RHIPEWHAT = 2;
     if (has_rhipewhat()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->rhipewhat());
@@ -1247,64 +896,6 @@ int RMRHeader::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->rhipelogfile());
-    }
-    
-    // optional string rhipe_setup_map = 4;
-    if (has_rhipe_setup_map()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->rhipe_setup_map());
-    }
-    
-    // optional string rhipe_map = 5;
-    if (has_rhipe_map()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->rhipe_map());
-    }
-    
-    // optional string rhipe_cleanup_map = 6;
-    if (has_rhipe_cleanup_map()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->rhipe_cleanup_map());
-    }
-    
-    // optional string rhipe_reduce_setup = 7;
-    if (has_rhipe_reduce_setup()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->rhipe_reduce_setup());
-    }
-    
-    // optional string rhipe_reduce_prekey = 8;
-    if (has_rhipe_reduce_prekey()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->rhipe_reduce_prekey());
-    }
-    
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional string rhipe_reduce = 9;
-    if (has_rhipe_reduce()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->rhipe_reduce());
-    }
-    
-    // optional string rhipe_reduce_postkey = 10;
-    if (has_rhipe_reduce_postkey()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->rhipe_reduce_postkey());
-    }
-    
-    // optional string rhipe_reduce_cleanup = 11;
-    if (has_rhipe_reduce_cleanup()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->rhipe_reduce_cleanup());
     }
     
     // optional string rhipe_outputformat_class = 12;
@@ -1335,7 +926,15 @@ int RMRHeader::ByteSize() const {
     }
     
   }
-  // repeated .ParameterPair arguments = 16;
+  // repeated .ParameterPair serialized_assignments = 16;
+  total_size += 2 * this->serialized_assignments_size();
+  for (int i = 0; i < this->serialized_assignments_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->serialized_assignments(i));
+  }
+  
+  // repeated .ParameterPair arguments = 17;
   total_size += 2 * this->arguments_size();
   for (int i = 0; i < this->arguments_size(); i++) {
     total_size +=
@@ -1368,6 +967,7 @@ void RMRHeader::MergeFrom(const ::google::protobuf::Message& from) {
 
 void RMRHeader::MergeFrom(const RMRHeader& from) {
   GOOGLE_CHECK_NE(&from, this);
+  serialized_assignments_.MergeFrom(from.serialized_assignments_);
   arguments_.MergeFrom(from.arguments_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_id()) {
@@ -1378,32 +978,6 @@ void RMRHeader::MergeFrom(const RMRHeader& from) {
     }
     if (from.has_rhipelogfile()) {
       set_rhipelogfile(from.rhipelogfile());
-    }
-    if (from.has_rhipe_setup_map()) {
-      set_rhipe_setup_map(from.rhipe_setup_map());
-    }
-    if (from.has_rhipe_map()) {
-      set_rhipe_map(from.rhipe_map());
-    }
-    if (from.has_rhipe_cleanup_map()) {
-      set_rhipe_cleanup_map(from.rhipe_cleanup_map());
-    }
-    if (from.has_rhipe_reduce_setup()) {
-      set_rhipe_reduce_setup(from.rhipe_reduce_setup());
-    }
-    if (from.has_rhipe_reduce_prekey()) {
-      set_rhipe_reduce_prekey(from.rhipe_reduce_prekey());
-    }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_rhipe_reduce()) {
-      set_rhipe_reduce(from.rhipe_reduce());
-    }
-    if (from.has_rhipe_reduce_postkey()) {
-      set_rhipe_reduce_postkey(from.rhipe_reduce_postkey());
-    }
-    if (from.has_rhipe_reduce_cleanup()) {
-      set_rhipe_reduce_cleanup(from.rhipe_reduce_cleanup());
     }
     if (from.has_rhipe_outputformat_class()) {
       set_rhipe_outputformat_class(from.rhipe_outputformat_class());
@@ -1434,8 +1008,10 @@ void RMRHeader::CopyFrom(const RMRHeader& from) {
 }
 
 bool RMRHeader::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
+  for (int i = 0; i < serialized_assignments_size(); i++) {
+    if (!this->serialized_assignments(i).IsInitialized()) return false;
+  }
   for (int i = 0; i < arguments_size(); i++) {
     if (!this->arguments(i).IsInitialized()) return false;
   }
@@ -1447,18 +1023,11 @@ void RMRHeader::Swap(RMRHeader* other) {
     std::swap(id_, other->id_);
     std::swap(rhipewhat_, other->rhipewhat_);
     std::swap(rhipelogfile_, other->rhipelogfile_);
-    std::swap(rhipe_setup_map_, other->rhipe_setup_map_);
-    std::swap(rhipe_map_, other->rhipe_map_);
-    std::swap(rhipe_cleanup_map_, other->rhipe_cleanup_map_);
-    std::swap(rhipe_reduce_setup_, other->rhipe_reduce_setup_);
-    std::swap(rhipe_reduce_prekey_, other->rhipe_reduce_prekey_);
-    std::swap(rhipe_reduce_, other->rhipe_reduce_);
-    std::swap(rhipe_reduce_postkey_, other->rhipe_reduce_postkey_);
-    std::swap(rhipe_reduce_cleanup_, other->rhipe_reduce_cleanup_);
     std::swap(rhipe_outputformat_class_, other->rhipe_outputformat_class_);
     std::swap(rhipe_combiner_, other->rhipe_combiner_);
     std::swap(rhipe_map_buff_size_, other->rhipe_map_buff_size_);
     std::swap(rhipe_map_bytes_read_, other->rhipe_map_bytes_read_);
+    serialized_assignments_.Swap(&other->serialized_assignments_);
     arguments_.Swap(&other->arguments_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
