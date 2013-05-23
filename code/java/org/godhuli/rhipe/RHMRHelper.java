@@ -36,6 +36,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.godhuli.rhipe.REXPProtos.REXP;
 import org.godhuli.rhipe.REXPProtos.REXP.RClass;
+import org.godhuli.rhipe.RMRHeaderProtos.*;
 
 import java.lang.reflect.*;
 
@@ -43,6 +44,13 @@ public class RHMRHelper {
     private  static int BUFFER_SIZE = 10*1024;
     private  static final String R_MAP_ERROR = "R MAP ERROR";
     private  static final String R_REDUCE_ERROR = "R REDUCE ERROR";
+	//potentially this can be placed in the conf all the way from R
+	//it describes what variables to get put into RMRHeader::serialized_assignments
+	private static final String[] SERIALIZED_ASSIGNMENTS_IN_CONF = {
+			"rhipe_setup_map", "rhipe_map", "rhipe_cleanup_map",
+			"rhipe_setup_reduce", "rhipe_reduce_prekey", "rhipe_reduce",
+			"rhipe_reduce_postkey", "rhipe_cleanup_reduce"
+	};	
     protected static final Log LOG = LogFactory.getLog(RHMRHelper.class.getName());
     public boolean copyFile;
     static private Environment env_;
@@ -80,24 +88,39 @@ public class RHMRHelper {
 	}
 	return exitVal;
     }
+	
+	//addJobConf
+	//originally addJobConfToEnvironment
+	//changed to split the job conf into env and RMRHeader depending on type of variable in conf.
+	//Modified by Jeremiah Rounds
+	//Originally by Saptarshi Guha
+    void addJobConf(Configuration conf, Properties env, RMRHeader.Builder header) {
+		Iterator it = conf.iterator();
 
-    void addJobConfToEnvironment(Configuration conf, Properties env) {
-	Iterator it = conf.iterator();
-	while (it.hasNext()) {
-	    Map.Entry en = (Map.Entry) it.next();
-	    String name = (String) en.getKey();
-	    if(name.equals("mapred.input.dir") 
-	       || name.equals("rhipe_input_folder")) 
-		continue;
-	    String value = null;
-	    if(!(name.equals("LD_LIBRARY_PATH") || name.equals("PATH"))){
-		value = conf.get(name); // does variable expansion
-	    } else {
-		value = conf.getRaw(name);
-	    }
-	    env.put(name, value);
-	}
+		while (it.hasNext()) {
+			Map.Entry en = (Map.Entry) it.next();
+			String name = (String) en.getKey();
+			if(name.equals("mapred.input.dir") || name.equals("rhipe_input_folder")) 
+				continue;
+			if(Arrays.asList(SERIALIZED_ASSIGNMENTS_IN_CONF).contains(name)){
+				//send to header
+				ParameterPair.Builder p = ParameterPair.newBuilder();
+				p.setName(name);
+				p.setValue(conf.get(name));
+				header.addSerializedAssignments(p);
+			}else{
+				//send to environment
+				String value = null;
+				if(!(name.equals("LD_LIBRARY_PATH") || name.equals("PATH"))){
+					value = conf.get(name); // does variable expansion
+					} else {
+					value = conf.getRaw(name);
+				}
+				env.put(name, value);
+			}
+		}
     }
+
     void doPartitionRelatedSetup(Configuration cfg){
 	if(!cfg.get("rhipe_partitioner_class").equals("none")){
 	    RHMRHelper.PARTITION_START = Integer.parseInt(cfg.get("rhipe_partitioner_start"))-1;
@@ -145,18 +168,20 @@ public class RHMRHelper {
 	    copyFile=cfg.get("rhipe_copy_file").equals("TRUE")? true: false;
 	    String[] argvSplit = argv.split(" ");
 	    String prog = argvSplit[0];
+		//child environment
 	    Environment childEnv = (Environment) env().clone();
 	    cfg.set("io_sort_mb",cfg.get("io.sort.mb"));
-	    addJobConfToEnvironment(cfg, childEnv);
-	    childEnv.put( "TMPDIR", 
-			  System.getProperty("java.io.tmpdir"));
+		//pass to child process via stdin
+		RMRHeader.Builder header_builder = RMRHeader.newBuilder();
+	    addJobConf(cfg, childEnv, header_builder);
+	    childEnv.put( "TMPDIR", System.getProperty("java.io.tmpdir"));
 	    // Start the process
 	    ProcessBuilder builder = new ProcessBuilder(argvSplit);
 	    builder.environment().putAll(childEnv.toMap());
 	    sim = builder.start();
-	    clientOut_=new DataOutputStream(new BufferedOutputStream(
-				                  sim.getOutputStream(),
-						  BUFFER_SIZE));
+		BufferedOutputStream out = new BufferedOutputStream(sim.getOutputStream(),BUFFER_SIZE);
+		header_builder.build().writeTo(out);
+	    clientOut_=new DataOutputStream(out);
 	    clientIn_ =new DataInputStream(new BufferedInputStream(
 						sim.getInputStream(),
 						BUFFER_SIZE));
