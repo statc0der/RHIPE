@@ -227,7 +227,7 @@ class RMRHeader : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional string ID = 1;
+  // required string ID = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIDFieldNumber = 1;
@@ -478,7 +478,7 @@ inline ::std::string* ParameterPair::release_value() {
 
 // RMRHeader
 
-// optional string ID = 1;
+// required string ID = 1;
 inline bool RMRHeader::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }

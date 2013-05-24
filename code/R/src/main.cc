@@ -3,7 +3,9 @@
 
 
 using namespace std;
-
+using namespace google::protobuf::io;
+using namespace std;
+using namespace google::protobuf;
 
 extern int R_running_as_main_program;
 extern uintptr_t R_CStackLimit; 
@@ -134,9 +136,18 @@ void quitR(){
 int main(int argc,char **argv){
 	//First thing we expect in STDIN is a RMRHeader.
 	//Parsing it is straight away and then utilizing it as necessary in Mapper or Reduce logic.
-	GOOGLE_PROTOBUF_VERIFY_VERSION;  
-	g_RMRHeader.ParseFromIstream(&cin);
-	
+	GOOGLE_PROTOBUF_VERIFY_VERSION;
+	IstreamInputStream input(&std::cin);
+	CodedInputStream in(&input);
+	uint32 size;
+	in.ReadVarint32(&size);
+	string s;
+	in.ReadString(&s, size);
+	if(!g_RMRHeader.ParseFromString(s)){
+		cout << "Error in parsing RMRHeader" << endl;
+		cout.flush();
+		return(0);
+	}
 	//After that everything is coded to get streams from CMMNC 
 	//so it has to be set up first.
 	//Specifically rewritten Re_WriteConsole in display.cc

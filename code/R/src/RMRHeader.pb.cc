@@ -110,7 +110,7 @@ void protobuf_AddDesc_RMRHeader_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\017RMRHeader.proto\",\n\rParameterPair\022\014\n\004na"
     "me\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"\243\002\n\tRMRHeader\022\n\n"
-    "\002ID\030\001 \001(\t\022\035\n\tRHIPEWHAT\030\002 \001(\0162\n.RhipeMode"
+    "\002ID\030\001 \002(\t\022\035\n\tRHIPEWHAT\030\002 \001(\0162\n.RhipeMode"
     "\022\024\n\014RHIPELOGFILE\030\003 \001(\t\022 \n\030rhipe_outputfo"
     "rmat_class\030\014 \001(\t\022%\n\016rhipe_combiner\030\r \001(\016"
     "2\r.CombinerMode\022\033\n\023rhipe_map_buff_size\030\016"
@@ -560,7 +560,7 @@ bool RMRHeader::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string ID = 1;
+      // required string ID = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -732,7 +732,7 @@ bool RMRHeader::MergePartialFromCodedStream(
 
 void RMRHeader::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // optional string ID = 1;
+  // required string ID = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->id().data(), this->id().length(),
@@ -801,7 +801,7 @@ void RMRHeader::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* RMRHeader::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional string ID = 1;
+  // required string ID = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->id().data(), this->id().length(),
@@ -878,7 +878,7 @@ int RMRHeader::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional string ID = 1;
+    // required string ID = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -1008,6 +1008,7 @@ void RMRHeader::CopyFrom(const RMRHeader& from) {
 }
 
 bool RMRHeader::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
   for (int i = 0; i < serialized_assignments_size(); i++) {
     if (!this->serialized_assignments(i).IsInitialized()) return false;
