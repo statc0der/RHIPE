@@ -22,7 +22,7 @@ enum CombinerMode {
 //use grep getenv *  it catches both R and C environment snooping.
 //RMR stands for RhipeMapReduce
 message RMRHeader {
-	optional string ID = 1; //Happy message from Java to C if you should so desire.
+	required string ID = 1; //Happy message from Java to C if you should so desire.
 	optional RhipeMode RHIPEWHAT = 2; //currently unread
 	optional string RHIPELOGFILE = 3;//currently unread
 	//In source for conversion but not currently read

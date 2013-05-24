@@ -37,7 +37,10 @@ import org.apache.commons.logging.LogFactory;
 import org.godhuli.rhipe.REXPProtos.REXP;
 import org.godhuli.rhipe.REXPProtos.REXP.RClass;
 import org.godhuli.rhipe.RMRHeaderProtos.*;
+import org.godhuli.rhipe.RMRHeaderProtos.*;
 
+import com.google.protobuf.ByteString;
+import com.google.protobuf.CodedOutputStream;
 import java.lang.reflect.*;
 
 public class RHMRHelper {
@@ -173,18 +176,23 @@ public class RHMRHelper {
 	    cfg.set("io_sort_mb",cfg.get("io.sort.mb"));
 		//pass to child process via stdin
 		RMRHeader.Builder header_builder = RMRHeader.newBuilder();
+		header_builder.setID("RHMRHelper");
 	    addJobConf(cfg, childEnv, header_builder);
 	    childEnv.put( "TMPDIR", System.getProperty("java.io.tmpdir"));
 	    // Start the process
 	    ProcessBuilder builder = new ProcessBuilder(argvSplit);
 	    builder.environment().putAll(childEnv.toMap());
 	    sim = builder.start();
-		BufferedOutputStream out = new BufferedOutputStream(sim.getOutputStream(),BUFFER_SIZE);
-		header_builder.build().writeTo(out);
-	    clientOut_=new DataOutputStream(out);
-	    clientIn_ =new DataInputStream(new BufferedInputStream(
-						sim.getInputStream(),
-						BUFFER_SIZE));
+	    OutputStream out = sim.getOutputStream();
+		RMRHeader header = header_builder.build();
+		CodedOutputStream coded_out = CodedOutputStream.newInstance(out);
+	    //built.writeDelimitedTo(sim.getOutputStream())
+	    coded_out.writeRawVarint32(header.getSerializedSize());
+		coded_out.flush();
+		coded_out.writeRawBytes(header.toByteArray());
+		coded_out.flush();
+	    clientOut_=new DataOutputStream(new BufferedOutputStream(out,BUFFER_SIZE));
+	    clientIn_ =new DataInputStream(new BufferedInputStream(sim.getInputStream(),BUFFER_SIZE));
 	    clientErr_ = new DataInputStream(new BufferedInputStream(sim.getErrorStream()));
 	    startTime_ = System.currentTimeMillis();
 	    LOG.info(callID+":"+"Started external program:"+argv);

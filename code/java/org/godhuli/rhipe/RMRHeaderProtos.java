@@ -634,7 +634,7 @@ public final class RMRHeaderProtos {
   public interface RMRHeaderOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // optional string ID = 1;
+    // required string ID = 1;
     boolean hasID();
     String getID();
     
@@ -711,7 +711,7 @@ public final class RMRHeaderProtos {
     }
     
     private int bitField0_;
-    // optional string ID = 1;
+    // required string ID = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object iD_;
     public boolean hasID() {
@@ -905,6 +905,10 @@ public final class RMRHeaderProtos {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
       
+      if (!hasID()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       for (int i = 0; i < getSerializedAssignmentsCount(); i++) {
         if (!getSerializedAssignments(i).isInitialized()) {
           memoizedIsInitialized = 0;
@@ -1326,6 +1330,10 @@ public final class RMRHeaderProtos {
       }
       
       public final boolean isInitialized() {
+        if (!hasID()) {
+          
+          return false;
+        }
         for (int i = 0; i < getSerializedAssignmentsCount(); i++) {
           if (!getSerializedAssignments(i).isInitialized()) {
             
@@ -1429,7 +1437,7 @@ public final class RMRHeaderProtos {
       
       private int bitField0_;
       
-      // optional string ID = 1;
+      // required string ID = 1;
       private java.lang.Object iD_ = "";
       public boolean hasID() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
@@ -2031,7 +2039,7 @@ public final class RMRHeaderProtos {
     java.lang.String[] descriptorData = {
       "\n\017RMRHeader.proto\",\n\rParameterPair\022\014\n\004na" +
       "me\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"\243\002\n\tRMRHeader\022\n\n" +
-      "\002ID\030\001 \001(\t\022\035\n\tRHIPEWHAT\030\002 \001(\0162\n.RhipeMode" +
+      "\002ID\030\001 \002(\t\022\035\n\tRHIPEWHAT\030\002 \001(\0162\n.RhipeMode" +
       "\022\024\n\014RHIPELOGFILE\030\003 \001(\t\022 \n\030rhipe_outputfo" +
       "rmat_class\030\014 \001(\t\022%\n\016rhipe_combiner\030\r \001(\016" +
       "2\r.CombinerMode\022\033\n\023rhipe_map_buff_size\030\016" +
