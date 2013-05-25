@@ -1,11 +1,11 @@
 #include "ream.h"
 #include <iostream>
 
-const char* REDUCESETUP = "unserialize(charToRaw(Sys.getenv('rhipe_setup_reduce')))";
-const char* REDUCEPREKEY = "unserialize(charToRaw(Sys.getenv('rhipe_reduce_prekey')))";
-const char* REDUCE = "unserialize(charToRaw(Sys.getenv('rhipe_reduce')))";
-const char* REDUCEPOSTKEY = "unserialize(charToRaw(Sys.getenv('rhipe_reduce_postkey')))";
-const char* REDUCECLEANUP = "unserialize(charToRaw(Sys.getenv('rhipe_cleanup_reduce')))";
+const char* REDUCESETUP = "unserialize(charToRaw(rhJobConf('rhipe_setup_reduce')))";
+const char* REDUCEPREKEY = "unserialize(charToRaw(rhJobConf('rhipe_reduce_prekey')))";
+const char* REDUCE = "unserialize(charToRaw(rhJobConf('rhipe_reduce')))";
+const char* REDUCEPOSTKEY = "unserialize(charToRaw(rhJobConf('rhipe_reduce_postkey')))";
+const char* REDUCECLEANUP = "unserialize(charToRaw(rhJobConf('rhipe_cleanup_reduce')))";
 
 const int reducer_run(void){
 
@@ -25,13 +25,13 @@ const int reducer_run(void){
   if ((redbustr=getenv("rhipe_reduce_bytes_read")))
     REDBUFFER_MAXBYTES= (unsigned int)strtol(redbustr,NULL,10);
 
-  PROTECT(prekey0=rexpress("rhipe_reduce_prekey"));
+  PROTECT(prekey0=rexpress(REDUCEPREKEY));
   PROTECT(prekey=Rf_lang2(Rf_install("eval"),prekey0));
 
-  PROTECT(reduce0=rexpress("rhipe_reduce"));
+  PROTECT(reduce0=rexpress(REDUCE));
   PROTECT(reduce=Rf_lang2(Rf_install("eval"),reduce0));
 
-  PROTECT(postkey0=rexpress("rhipe_post_key"));
+  PROTECT(postkey0=rexpress(REDUCEPOSTKEY));
   PROTECT(postkey=Rf_lang2(Rf_install("eval"),postkey0));
 
 
@@ -57,7 +57,7 @@ const int reducer_run(void){
 	LOGG(9,"Got reduce setup\n");
 	Rf_defineVar(Rf_install(".rhipe.current.state"),Rf_ScalarString(Rf_mkChar("reduce.setup")),R_GlobalEnv);
 
-	PROTECT(reducesetup=rexpress("rhipe_setup_reduce"));
+	PROTECT(reducesetup=rexpress(REDUCESETUP));
 	// Rf_eval(Rf_lang2(Rf_install("eval"),reducesetup),R_GlobalEnv);
 	WRAP_R_EVAL(Rf_lang2(Rf_install("eval"),reducesetup),NULL,&Rerr);
 	UNPROTECT(1);
@@ -67,7 +67,7 @@ const int reducer_run(void){
       {
 	SEXP reduceclean;
 	Rf_defineVar(Rf_install(".rhipe.current.state"),Rf_ScalarString(Rf_mkChar("reduce.cleanup")),R_GlobalEnv);
-	PROTECT(reduceclean=rexpress("rhipe_cleanup_reduce"));
+	PROTECT(reduceclean=rexpress(REDUCECLEANUP));
 	WRAP_R_EVAL(Rf_lang2(Rf_install("eval"),reduceclean),NULL, &Rerr);
 	UNPROTECT(1);
       }

@@ -60,6 +60,7 @@ extern const char* MAPRUNNERS;
 extern const char* MAPCLEANS;
 extern bool combiner_inplace;
 extern RMRHeader g_RMRHeader;
+extern map<string, string> g_job_conf;
 
 
 
@@ -201,6 +202,7 @@ void do_unser(void);
  ** Map & Reduce
  *****************/
 extern "C" SEXP execMapReduce();
+SEXP rhJobConf(SEXP);
 int readToKeyValueBuffers(FILE* fin, SEXP keys, SEXP values, int max_keyvalues,int32_t max_bytes_to_read,int* actual_keyvalues,int* reason) ;
 void shallowCopyVector(SEXP,SEXP);
 void setupCombiner();

@@ -12,6 +12,7 @@ R_CallMethodDef callMethods [] = {
   {"rh_uz",(DL_FUNC) persUnser,1},
   {"rh_sz",(DL_FUNC) persSer,1},
   {"rh_dbgstr",(DL_FUNC) dbgstr,1},
+  {"rh_JobConf",(DL_FUNC) rhJobConf,1},
   {NULL, NULL, 0}
 };
 
@@ -31,6 +32,28 @@ SEXP comb_pre_red,comb_do_red,comb_post_red;
 #ifdef USETIMER
 long int collect_buffer_total ,collect_total ,time_in_reval ,collect_spill_total,time_in_reduce_reval;
 #endif
+
+/*
+ * rhJobConf
+ * checks contents of g_job_conf and returns string values of the conf as found
+ *
+ */
+SEXP rhJobConf(SEXP name){
+	SEXP ret = R_NilValue;
+
+	string sname((char*) CHAR(STRING_ELT(name , 0)));
+	map<string,string>::iterator it = g_job_conf.find(sname);
+	string value;
+	if(it != g_job_conf.end())
+	{
+	   //element found;
+	   value = it->second;
+	   PROTECT(ret = Rf_allocVector(STRSXP, 1));
+	   SET_STRING_ELT(ret, 0, Rf_mkChar(value.c_str()));
+	   UNPROTECT(1);
+	}
+	 return(ret);
+};
 
 
 void CaptureLog(LogLevel level, const char* filename, int line,
@@ -150,7 +173,7 @@ void setupCombiner(){
 	rexpress(".rhipe.current.state<-'map.combine';rhcollect<-function(key,value) .Call('rh_collect_buffer',key,value)");
 	SEXP reducesetup;
 	int Rerr = 0;
-	PROTECT(reducesetup=rexpress("rhipe_setup_reduce"));
+	PROTECT(reducesetup=rexpress(REDUCESETUP));
 	R_tryEval(Rf_lang2(Rf_install("eval"), reducesetup), NULL, &Rerr);
 	UNPROTECT(1);
 }
@@ -183,7 +206,7 @@ void cleanupMapper(){
 
 	//do we really need to evaluate type to see if we should be doing this?  Don't see why...
 	Rf_defineVar(Rf_install(".rhipe.current.state"),Rf_ScalarString(Rf_mkChar("map.cleanup")),R_GlobalEnv);
-	PROTECT(cleaner=rexpress("rhipe_cleanup_map"));
+	PROTECT(cleaner=rexpress(MAPCLEANS));
 	R_tryEval(Rf_lang2(Rf_install("eval"),cleaner),NULL,&Rerr);
 	UNPROTECT(1);
 
@@ -214,7 +237,7 @@ int mainMapperLoop(FILE* fin){
 	  int32_t  max_bytes_to_read = 0;
 
 	  //CREATE MAP EXPRESSION LANGUAGE OBJECTS
-	  PROTECT(runner1=rexpress("rhipe_map"));
+	  PROTECT(runner1=rexpress(MAPRUNNERS));
 	  PROTECT(runner2=Rf_lang2(Rf_install("eval"),runner1));
 	  protect += 2;
 	  //
@@ -436,10 +459,10 @@ SEXP execMapReduce() {
 	  rexpress("rhcollect<-function(key,value) .Call('rh_collect',key,value)");
 	  rexpress("rhvcollect<-function(key,value) .Call('rh_vcollect',key,value)");
 	}
-
+	rexpress("rhJobConf<-function(name) .Call('rh_JobConf',name)");
 
 	LOGG(9,"Loaded R Wrappers\n");
-	doHeaderREvaluations(); // get all the expressions in the global environment via the header.
+	//doHeaderREvaluations(); // get all the expressions in the global environment via the header.
 
 	LOGG(10,"STD{IN,OUT,ERR}  in binary \n");
 
