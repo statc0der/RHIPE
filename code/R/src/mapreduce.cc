@@ -38,21 +38,32 @@ long int collect_buffer_total ,collect_total ,time_in_reval ,collect_spill_total
  * checks contents of g_job_conf and returns string values of the conf as found
  *
  */
-SEXP rhJobConf(SEXP name){
-	SEXP ret = R_NilValue;
-
-	string sname((char*) CHAR(STRING_ELT(name , 0)));
+string getJobConf(string sname){
+	LOGG(9, "getJobConf ");
+	LOGG(9, sname.c_str());
+	LOGG(9, "\n");
 	map<string,string>::iterator it = g_job_conf.find(sname);
 	string value;
 	if(it != g_job_conf.end())
 	{
 	   //element found;
 	   value = it->second;
-	   PROTECT(ret = Rf_allocVector(STRSXP, 1));
-	   SET_STRING_ELT(ret, 0, Rf_mkChar(value.c_str()));
-	   UNPROTECT(1);
+	   LOGG(9, "Found");
+	   LOGG(9, value.c_str());
+	   LOGG(9, "\n");
 	}
-	 return(ret);
+	return value;
+
+
+}
+SEXP rhJobConf(SEXP name){
+	SEXP ret = R_NilValue;
+	string sname((char*) CHAR(STRING_ELT(name , 0)));
+	string value = getJobConf(sname);
+	PROTECT(ret = Rf_allocVector(STRSXP, 1));
+	SET_STRING_ELT(ret, 0, Rf_mkChar(value.c_str()));
+	UNPROTECT(1);
+	 return ret;
 };
 
 
@@ -226,6 +237,7 @@ void cleanupMapper(){
  *
  */
 int mainMapperLoop(FILE* fin){
+		LOGG(9, "ENTERING mainMapperLoop\n");
 	  //indicate state to R.
 	  Rf_defineVar(Rf_install(".rhipe.current.state"),Rf_ScalarString(Rf_mkChar("map")),R_GlobalEnv);
 
@@ -340,19 +352,25 @@ int mainMapperLoop(FILE* fin){
 
 void execMapperWithCombiner(FILE* fin){
 	int ret;
-
+	LOGG(9, "ENTERING execMapperWithCombiner\n");
+	getJobConf("rhipe_setup_map");
+	getJobConf("rhipe_map");
+	getJobConf("rhipe_cleanup_map");
 	setupCombiner();
+	LOGG(9, "setupCombiner\n");
 	if ((ret = mapper_setup()) != 0) {
 		LOGG(12,"FAILURE IN MAP SETUP:%d\n",ret);
 		merror("Error while running mapper setup: %d\n", ret);
 		return;
 	}
+	LOGG(9, "mapper_setup\n");
 
 	if ((ret = mainMapperLoop(fin)) != 0) {
 		LOGG(12,"FAILURE IN MAP RUN:%d\n",ret);
 		merror("Error while running mapper: %d\n", ret);
 		return;
 	}
+
 	cleanupMapper(); //we always run this.  We don't need permission from Java classes.
 	cleanupCombiner();
 
@@ -421,19 +439,7 @@ SEXP execMapReduce() {
 		return(R_NilValue);
 	}
 #endif
-	int uid = geteuid();
-#ifdef RHIPEDEBUG
-	char fn[1024];
-	char *logfile=NULL;
-	if( (logfile=getenv("RHIPELOGFILE")) )
-	snprintf(fn,1023,"%s.euid-%d.pid-%d.log",logfile,uid,getpid());
-	else
-	snprintf(fn,1023,"/tmp/rhipe.euid-%d.pid-%d.log",uid,getpid());
-	LOG=fopen(fn,"w");
-	LOGG(10,"\n.....................\n");
-	LOGG(10,"Starting Up\n");
-	fflush(LOG);
-#endif
+
 
 	LOGG(10,"R Embedded\n");
 	GOOGLE_PROTOBUF_VERIFY_VERSION;
