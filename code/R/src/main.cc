@@ -11,6 +11,7 @@ extern int R_running_as_main_program;
 extern uintptr_t R_CStackLimit; 
 
 RMRHeader g_RMRHeader;
+map<string,string> g_job_conf;
 
 
 
@@ -133,6 +134,14 @@ void quitR(){
 
 }
 
+void extractJobConfFromHeader(){
+	RepeatedPtrField<ParameterPair>
+			iter = g_RMRHeader.serialized_assignments();
+	RepeatedPtrField<ParameterPair>::iterator p;
+	for(p = iter.begin(); p != iter.end();p++){
+		g_job_conf.insert(make_pair((*p).name(),(*p).value()));
+	}
+}
 int main(int argc,char **argv){
 	//First thing we expect in STDIN is a RMRHeader.
 	//Parsing it is straight away and then utilizing it as necessary in Mapper or Reduce logic.
@@ -148,6 +157,7 @@ int main(int argc,char **argv){
 		cout.flush();
 		return(0);
 	}
+	extractJobConfFromHeader();
 	//After that everything is coded to get streams from CMMNC 
 	//so it has to be set up first.
 	//Specifically rewritten Re_WriteConsole in display.cc

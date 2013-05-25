@@ -19,6 +19,8 @@ using namespace google::protobuf::io;
 // static REXP *rexp_container = new REXP();
 extern uintptr_t R_CStackLimit;
 
+
+
 void CaptureLogInLibrary(LogLevel level, const char* filename, int line,
 		const string& message) {
   static const char* pb_log_level[] = { "LOGLEVEL_INFO", "LOGLEVEL_WARNING",
