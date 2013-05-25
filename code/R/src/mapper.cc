@@ -303,7 +303,8 @@ const int mapper_setup(void){
 
   if(type==EVAL_SETUP_MAP){
     Rf_defineVar(Rf_install(".rhipe.current.state"),Rf_ScalarString(Rf_mkChar("map.setup")),R_GlobalEnv);
-    PROTECT(setupm=rexpress("rhipe_setup_map"));
+    LOGG(9,"IN mapper_setup FIRST CALL TO rexpress(MAPSETUPS)");
+    PROTECT(setupm=rexpress(MAPSETUPS));
     WRAP_R_EVAL(Rf_lang2(Rf_install("eval"),setupm),NULL,&Rerr);
     UNPROTECT(1);
     if(Rerr) return(7);

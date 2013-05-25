@@ -5,6 +5,7 @@
 #include <sstream>
 #include <vector>
 #include <map>
+#include <fstream>
 
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/io/coded_stream.h>
@@ -61,6 +62,7 @@ extern const char* MAPCLEANS;
 extern bool combiner_inplace;
 extern RMRHeader g_RMRHeader;
 extern map<string, string> g_job_conf;
+extern ofstream out;
 
 
 
@@ -95,6 +97,7 @@ extern map<string, string> g_job_conf;
 extern FILE *FILEIN;
 #endif
 
+#define RHIPEDEBUG 1
 #ifdef RHIPEDEBUG
 #define LOGG(...) logg(__VA_ARGS__)
 #else

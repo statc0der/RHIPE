@@ -4,7 +4,6 @@
 
 using namespace std;
 using namespace google::protobuf::io;
-using namespace std;
 using namespace google::protobuf;
 
 extern int R_running_as_main_program;
@@ -139,12 +138,27 @@ void extractJobConfFromHeader(){
 			iter = g_RMRHeader.serialized_assignments();
 	RepeatedPtrField<ParameterPair>::iterator p;
 	for(p = iter.begin(); p != iter.end();p++){
+
 		g_job_conf.insert(make_pair((*p).name(),(*p).value()));
 	}
 }
+ofstream out("/tmp/test_ofstream.txt");
 int main(int argc,char **argv){
 	//First thing we expect in STDIN is a RMRHeader.
 	//Parsing it is straight away and then utilizing it as necessary in Mapper or Reduce logic.
+	int uid = geteuid();
+#ifdef RHIPEDEBUG
+	char fn[1024];
+	char *logfile=NULL;
+	//if( (logfile=getenv("RHIPELOGFILE")) )
+	//snprintf(fn,1023,"%s.euid-%d.pid-%d.log",logfile,uid,getpid());
+	//else
+	snprintf(fn,1023,"/tmp/rhipe.euid-%d.pid-%d.log",uid,getpid());
+	LOG=fopen(fn,"w");
+	LOGG(10,"\n.....................\n");
+	LOGG(10,"Starting Up\n");
+	fflush(LOG);
+#endif
 	GOOGLE_PROTOBUF_VERIFY_VERSION;
 	IstreamInputStream input(&std::cin);
 	CodedInputStream in(&input);
@@ -152,20 +166,29 @@ int main(int argc,char **argv){
 	in.ReadVarint32(&size);
 	string s;
 	in.ReadString(&s, size);
+	LOGG(9,"GOT RMRHeader STRING\n");
+	g_job_conf.empty();
 	if(!g_RMRHeader.ParseFromString(s)){
 		cout << "Error in parsing RMRHeader" << endl;
 		cout.flush();
-		return(0);
+		return(1);
 	}
+	LOGG(9,"FINISHED RMRHeader PARSE\n");
+	//out.close();
 	extractJobConfFromHeader();
+
+
+	//cout << "Completed Job Conf" << endl;
+	//cout.flush();
 	//After that everything is coded to get streams from CMMNC 
 	//so it has to be set up first.
 	//Specifically rewritten Re_WriteConsole in display.cc
 	CMMNC = (Streams*) malloc(sizeof(Streams));
 	setup_stream(CMMNC);
 
-
+	LOGG(9, "Finished setup stream\n");
 	if (embedR(argc,argv) != 0) exit(101);
+	LOGG(9, "Finished embedR\n");
 	execMapReduce();
 	quitR();
 
