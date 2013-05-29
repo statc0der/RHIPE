@@ -1,0 +1,12 @@
+markdown: rdiscount
+pygments: true
+permalink: RHIPE/:title
+extensions:	
+ - autolink      # greedily urlify links
+ - footnotes     # footnotes
+ - smart         # typographic substitutions with SmartyPants
+ 
+tags:
+- jekyll
+- code
+
