@@ -1,6 +1,7 @@
 markdown: rdiscount
 pygments: true
-permalink: RHIPE/:title
+permalink: RHIPE/:title.html
+
 extensions:	
  - autolink      # greedily urlify links
  - footnotes     # footnotes
