@@ -48,15 +48,16 @@ string getJobConf(string sname){
 	{
 	   //element found;
 	   value = it->second;
-	   LOGG(9, "Found");
-	   LOGG(9, value.c_str());
-	   LOGG(9, "\n");
+	   LOGG(9, "Found\n");
+	   //LOGG(9, value.c_str());
+	   //LOGG(9, "\n");
 	}
 	return value;
 
 
 }
 SEXP rhJobConf(SEXP name){
+	LOGG(9, "ENTERING rhJobConf\n");
 	SEXP ret = R_NilValue;
 	string sname((char*) CHAR(STRING_ELT(name , 0)));
 	string value = getJobConf(sname);

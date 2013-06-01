@@ -92,12 +92,9 @@ public class RHMRHelper {
 	return exitVal;
     }
 	
-	//addJobConf
-	//originally addJobConfToEnvironment
-	//changed to split the job conf into env and RMRHeader depending on type of variable in conf.
-	//Modified by Jeremiah Rounds
-	//Originally by Saptarshi Guha
-    void addJobConf(Configuration conf, Properties env, RMRHeader.Builder header) {
+
+
+    void addJobConfToEnvironment(Configuration conf, Properties env) {
 		Iterator it = conf.iterator();
 
 		while (it.hasNext()) {
@@ -107,10 +104,7 @@ public class RHMRHelper {
 				continue;
 			if(Arrays.asList(SERIALIZED_ASSIGNMENTS_IN_CONF).contains(name)){
 				//send to header
-				ParameterPair.Builder p = ParameterPair.newBuilder();
-				p.setName(name);
-				p.setValue(conf.get(name));
-				header.addSerializedAssignments(p.build());
+				//NO OP
 			}else{
 				//send to environment
 				String value = null;
@@ -129,6 +123,52 @@ public class RHMRHelper {
 	    RHMRHelper.PARTITION_START = Integer.parseInt(cfg.get("rhipe_partitioner_start"))-1;
 	    RHMRHelper.PARTITION_END = Integer.parseInt(cfg.get("rhipe_partitioner_end"))-1;
 	}
+    }
+    RMRHeader jobConfToRMRHeader(Configuration conf){
+    	RMRHeader.Builder header = RMRHeader.newBuilder();
+		header.setID("RHMRHelper");
+		Iterator it = conf.iterator();
+
+		while (it.hasNext()) {
+			Map.Entry en = (Map.Entry) it.next();
+			String name = (String) en.getKey();
+			if(name.equals("mapred.input.dir") || name.equals("rhipe_input_folder")) 
+				continue;
+			if(Arrays.asList(SERIALIZED_ASSIGNMENTS_IN_CONF).contains(name)){
+				//send to header
+				ParameterPair.Builder p = ParameterPair.newBuilder();
+				p.setName(name);
+				p.setValue(conf.get(name));
+				header.addSerializedAssignments(p.build());
+			}else{
+				//send to environment
+				//NO OP
+			}
+		}
+		return header.build();
+    }
+    //outputs a RMRHeader to out from conf into out
+    //Used both in front-end side RHMR calls (for debugging)
+    //and in MapReduce to pass parameters to RhipeMapReduce
+    void writeRMRHeader(Configuration conf, DataOutput out){
+    	try{
+	    	RMRHeader header = jobConfToRMRHeader(conf);
+			//CodedOutputStream coded_out = CodedOutputStream.newInstance(out);
+		    //built.writeDelimitedTo(sim.getOutputStream())
+			//coded_out.writeRawLittleEndian32(header.getSerializedSize());
+		    //coded_out.(header.getSerializedSize());
+			//coded_out.flush();
+	    	byte[] bytes = header.toByteArray();
+			WritableUtils.writeVInt(out,bytes.length);
+			out.write(bytes, 0,bytes.length);
+			//out.flush();
+			//coded_out.flush();
+	    	//writeByteArray(header.toByteArray());
+		} catch (Exception e) {
+		    e.printStackTrace();
+		    throw new RuntimeException("Writing RMRHeader exception", e);
+		}
+    	
     }
     void setup(Configuration cfg, String argv,boolean doPipe){     
 	try {
@@ -175,23 +215,18 @@ public class RHMRHelper {
 	    Environment childEnv = (Environment) env().clone();
 	    cfg.set("io_sort_mb",cfg.get("io.sort.mb"));
 		//pass to child process via stdin
-		RMRHeader.Builder header_builder = RMRHeader.newBuilder();
-		header_builder.setID("RHMRHelper");
-	    addJobConf(cfg, childEnv, header_builder);
+		
+	    addJobConfToEnvironment(cfg, childEnv);
 	    childEnv.put( "TMPDIR", System.getProperty("java.io.tmpdir"));
 	    // Start the process
 	    ProcessBuilder builder = new ProcessBuilder(argvSplit);
 	    builder.environment().putAll(childEnv.toMap());
 	    sim = builder.start();
 	    OutputStream out = sim.getOutputStream();
-		RMRHeader header = header_builder.build();
-		CodedOutputStream coded_out = CodedOutputStream.newInstance(out);
-	    //built.writeDelimitedTo(sim.getOutputStream())
-	    coded_out.writeRawVarint32(header.getSerializedSize());
-		coded_out.flush();
-		coded_out.writeRawBytes(header.toByteArray());
-		coded_out.flush();
+	    //writeRMRHeader(cfg,out);
+		
 	    clientOut_=new DataOutputStream(new BufferedOutputStream(out,BUFFER_SIZE));
+	   
 	    clientIn_ =new DataInputStream(new BufferedInputStream(sim.getInputStream(),BUFFER_SIZE));
 	    clientErr_ = new DataInputStream(new BufferedInputStream(sim.getErrorStream()));
 	    startTime_ = System.currentTimeMillis();
@@ -199,6 +234,7 @@ public class RHMRHelper {
 	    errThread_ = new MRErrorThread();
 	    LOG.info(callID+":"+"Started Error Thread");
 	    errThread_.start();
+	    writeRMRHeader(cfg, clientOut_);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    throw new RuntimeException("configuration exception", e);
@@ -318,6 +354,11 @@ public class RHMRHelper {
     public void write(WritableComparable c) throws IOException{
     	c.write(clientOut_);
     }
+    //public static void writeByteArray(byte[] bytes, DataOutput out){
+    //	WritableUtils.writeVInt(out,bytes.length);
+   // 	out.write(bytes, bytes.length);
+    	
+    //}
 
 	
  

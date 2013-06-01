@@ -133,6 +133,33 @@ void quitR(){
 
 }
 
+//Based on readFromHadoop in display.cc
+int readRMRHeader(){
+	LOGG(9, "Entered readRMRHeader\n");
+	int32_t 	nbytes = readVInt64FromFileDescriptor(CMMNC->BSTDIN);
+	void* inputbuffer = malloc(nbytes);
+
+	if( fread(inputbuffer,nbytes,1,CMMNC->BSTDIN)<=0){
+		cout << "ERROR: Cannot read " << nbytes << " bytes from stdin in readRMRHeader." << endl;
+		free(inputbuffer);
+		return 2;
+
+	}
+	LOGG(9, "Header buffer read\n");
+	CodedInputStream cds((uint8_t*)(inputbuffer),nbytes);
+	cds.SetTotalBytesLimit(256*1024*1024,256*1024*1024);
+	if (!g_RMRHeader.ParseFromCodedStream(&cds)){
+		// if (oiinfo.rxp->ParseFromArray(oiinfo.inputbuffer,nbytes)){
+		cout << "Error in parsing RMRHeader" << endl;
+		cout.flush();
+		free(inputbuffer);
+		return 2;
+	}
+	free(inputbuffer);
+	return 0;
+
+}
+
 void extractJobConfFromHeader(){
 	RepeatedPtrField<ParameterPair>
 			iter = g_RMRHeader.serialized_assignments();
@@ -142,8 +169,14 @@ void extractJobConfFromHeader(){
 		g_job_conf.insert(make_pair((*p).name(),(*p).value()));
 	}
 }
-ofstream out("/tmp/test_ofstream.txt");
+
 int main(int argc,char **argv){
+	CMMNC = (Streams*) malloc(sizeof(Streams));
+	setup_stream(CMMNC);
+
+	LOGG(9, "Finished setup stream\n");
+
+	//cin.sync_with_stdio(true); // <------- THE MAGIC FUNCTION OF C++ AND C INTEROPERABILITY. Jeremiah Rounds
 	//First thing we expect in STDIN is a RMRHeader.
 	//Parsing it is straight away and then utilizing it as necessary in Mapper or Reduce logic.
 	int uid = geteuid();
@@ -160,19 +193,21 @@ int main(int argc,char **argv){
 	fflush(LOG);
 #endif
 	GOOGLE_PROTOBUF_VERIFY_VERSION;
-	IstreamInputStream input(&std::cin);
-	CodedInputStream in(&input);
-	uint32 size;
-	in.ReadVarint32(&size);
-	string s;
-	in.ReadString(&s, size);
-	LOGG(9,"GOT RMRHeader STRING\n");
+	//IstreamInputStream input(&std::cin);
+	//CodedInputStream in(&input);
+	//uint32 size;
+	//in.ReadLittleEndian32(&size);
+	//in.ReadVarint32(&size);
+	//string s;
+	//in.ReadString(&s, size);
+	//LOGG(9,"GOT RMRHeader STRING\n");
 	g_job_conf.empty();
-	if(!g_RMRHeader.ParseFromString(s)){
+	if(readRMRHeader() != 0){
 		cout << "Error in parsing RMRHeader" << endl;
 		cout.flush();
-		return(1);
+		return 2;
 	}
+
 	LOGG(9,"FINISHED RMRHeader PARSE\n");
 	//out.close();
 	extractJobConfFromHeader();
@@ -183,10 +218,7 @@ int main(int argc,char **argv){
 	//After that everything is coded to get streams from CMMNC 
 	//so it has to be set up first.
 	//Specifically rewritten Re_WriteConsole in display.cc
-	CMMNC = (Streams*) malloc(sizeof(Streams));
-	setup_stream(CMMNC);
 
-	LOGG(9, "Finished setup stream\n");
 	if (embedR(argc,argv) != 0) exit(101);
 	LOGG(9, "Finished embedR\n");
 	execMapReduce();

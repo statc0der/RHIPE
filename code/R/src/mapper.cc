@@ -299,9 +299,11 @@ const int mapper_setup(void){
   int32_t type = 0;
   SEXP setupm;
   int Rerr;
+  LOGG(9, "ENTERING mapper_setup\n");
   type = readVInt64FromFileDescriptor(CMMNC->BSTDIN);
 
   if(type==EVAL_SETUP_MAP){
+	LOGG(9, "Found correct token\n");
     Rf_defineVar(Rf_install(".rhipe.current.state"),Rf_ScalarString(Rf_mkChar("map.setup")),R_GlobalEnv);
     LOGG(9,"IN mapper_setup FIRST CALL TO rexpress(MAPSETUPS)");
     PROTECT(setupm=rexpress(MAPSETUPS));
@@ -310,8 +312,10 @@ const int mapper_setup(void){
     if(Rerr) return(7);
   }
   else {
-    merror("RHIPE ERROR: What command is this for setup: %d ?\n",type);
-    return(8);
+	  LOGG(9, "ERROR WRONG TOKEN IN mapper_setup\n");
+	  return(8);
+	  merror("RHIPE ERROR: What command is this for setup: %d ?\n",type);
+	  return(8);
   }
 
   return(0);

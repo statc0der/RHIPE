@@ -111,8 +111,16 @@ public class RHMR implements Tool {
 	public void setConfig(Configuration c) {
 		config_ = c;
 	}
-
 	public void setConf(Configuration c) {
+	}
+	//Used for debugging calls to RhipeMapReduce
+	//Call after init
+	//writes out the job conf to a file
+	public void writeRMRHeader(String file) {
+		//FileOutputStream out = new FileOutputStream(file);
+		//writeRMRHeader(config_, out);
+		//out.close();
+		
 	}
 
 	protected void init() {
@@ -366,7 +374,6 @@ public class RHMR implements Tool {
 		cn.add(cvalues.build());
 		return (RObjects.makeList(groupdispname, cn));
 	}
-
 	public void readParametersFromR(String configfile) throws IOException {
 		FileInputStream in = new FileInputStream(configfile);
 		DataInputStream fin = new DataInputStream(in);
